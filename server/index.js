@@ -32,10 +32,10 @@ app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
 
-// Serve static files - After API routes
+// Serve static files from the client build (adjust path as needed)
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-// Handle client-side routing - Must be last
+// Fallback: serve index.html for any route not handled above (for SPA)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
