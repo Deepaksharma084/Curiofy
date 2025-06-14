@@ -19,7 +19,7 @@ function DeleteBlogButton({ blogId }) {
       const data = await res.json();
       if (res.ok) {
         alert(data.message);
-        navigate('/'); // Redirect to home page after successful deletion
+        navigate('/blogs/:category'); // Redirect to home page after successful deletion
       } else {
         alert(data.message || 'Delete failed');
       }
