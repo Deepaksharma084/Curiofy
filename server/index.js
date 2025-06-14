@@ -13,7 +13,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 const cors = require('cors');
 app.use(cors({
-    origin: 'https://curiofy.onrender.com', // Added frontend production URL
+    origin: [
+        'https://curiofy.onrender.com',
+        'http://localhost:5173'
+    ], // Added frontend production URL and Vite local host
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

@@ -26,18 +26,19 @@ const LoginOwner = () => {
             const response = await fetch(`${API_BASE_URL}/owner/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                credentials: 'include',
+                credentials: 'include',  // Make sure this is present
                 body: JSON.stringify(formData),
             });
 
             const data = await response.json();
+            console.log('Cookies after login:', document.cookie); // Add this line
 
             if (response.ok && data.owner) {
                 setSuccess("Login successful!");
                 setOwner(data.owner);
                 setTimeout(() => {
                     navigate('/blogs/create');
-                }, 1500); // Redirect after 1.5 seconds
+                }, 1500);
             } else {
                 setError(data.error || "Invalid email or password");
             }
@@ -51,7 +52,7 @@ const LoginOwner = () => {
             <div className={styles.overlay}>
                 <div className="backdrop-blur-xl bg-white/10 p-8 rounded-3xl shadow-2xl w-96 border border-white/20">
                     <h2 className="text-2xl font-semibold text-white mb-6 text-center">Login</h2>
-                    
+
                     {/* Alert Messages */}
                     {error && (
                         <div className="bg-red-500/20 text-white p-3 rounded-lg mb-4 text-sm">

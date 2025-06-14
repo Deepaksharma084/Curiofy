@@ -50,13 +50,15 @@ module.exports.loginOwner = async (req, res) => {
                     email: owner.email
                 };
 
-                res.cookie('jwt', token)
-                    .status(200)
-                    .json({
-                        message: "Owner logged in successfully",
-                        token,
-                        owner: ownerData  // Including owner data in response
-                    });
+                res.cookie('jwt', token, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production', // true in production
+                    sameSite: 'lax',
+                    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+                }).status(200).json({
+                    message: "Owner logged in successfully",
+                    owner: ownerData
+                });
             }
             else {
                 res.status(400).json({ error: 'Invalid email or password' });
