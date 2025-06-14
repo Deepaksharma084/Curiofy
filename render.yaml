@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: curiofy-backend
+    env: node
+    buildCommand: cd server && npm install && cd ../client && npm install && npm run build
+    startCommand: cd server && node index.js
+    staticPublishPath: client/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Footer from './components/Footer';
 import BlogDetail from './components/BlogDetail';
 import BlogUpdate from './components/BlogUpdate';
+import NotFound from './components/NotFound';
 import './App.css'
 
 //ProtectedRoute component
@@ -41,6 +42,7 @@ function App() {
             <Route path="/blogs/:category" element={<BlogListing />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/blog/edit/:id" element={<BlogUpdate />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </div>
