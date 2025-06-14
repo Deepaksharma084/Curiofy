@@ -27,15 +27,13 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes - Put API routes first
+// API routes first
 app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
 
-// Serve static files from the client build (adjust path as needed)
+// Static files and SPA fallback after API routes
 app.use(express.static(path.join(__dirname, '../client/dist')));
-
-// Fallback: serve index.html for any route not handled above (for SPA)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
