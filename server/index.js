@@ -27,19 +27,20 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes - Put API routes first
 app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
 
-// Serve static files from the React app
+// Serve static files - After API routes
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-// Handle React routing, return all requests to React app
+// Handle client-side routing - Must be last
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
