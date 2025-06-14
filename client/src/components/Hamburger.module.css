@@ -1,0 +1,47 @@
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.background {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu__icon {
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+}
+
+.menu__icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu__icon span + span {
+  margin-top: 6px;
+}
+
+.open .menu__icon span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.open .menu__icon span:nth-child(2) {
+  opacity: 0;
+}
+
+.open .menu__icon span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
