@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const path = require('path'); // Add this line at the top
+const path = require('path');
 const indexRouter = require("./routes/indexRouter");
 const blogRoute = require("./routes/blogRoute");
 const ownerRoute = require("./routes/ownerRoute");
@@ -20,8 +20,7 @@ app.use(cors({
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['set-cookie']
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(cookieParser());
