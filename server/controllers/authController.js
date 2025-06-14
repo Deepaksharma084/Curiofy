@@ -33,42 +33,41 @@ module.exports.registerOwner = async (req, res) => {
 module.exports.loginOwner = async (req, res) => {
     try {
         let { email, password } = req.body;
-
         const owner = await ownerModel.findOne({ email: email });
-        if (!owner)
+
+        if (!owner) {
             return res.status(400).json({ error: "Invalid email or password" });
+        }
 
-        bcrypt.compare(password, owner.password, async function (err, result) {
-            if (err) {
-                return res.status(500).json({ error: err.message });
-            }
-            if (result) {
-                let token = generateToken(owner);
-                // Creating owner object without password
-                const ownerData = {
-                    _id: owner._id,
-                    email: owner.email
-                };
+        const result = await bcrypt.compare(password, owner.password);
+        if (result) {
+            let token = generateToken(owner);
+            const ownerData = {
+                _id: owner._id,
+                email: owner.email
+            };
 
-                res.cookie('jwt', token, {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production', // true in production
-                    sameSite: 'lax',
-                    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-                }).status(200).json({
-                    message: "Owner logged in successfully",
-                    owner: ownerData
-                });
-            }
-            else {
-                res.status(400).json({ error: 'Invalid email or password' });
-            }
-        });
+            // Set cookie with appropriate options for production
+            res.cookie('jwt', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', // true in production
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                maxAge: 24 * 60 * 60 * 1000, // 24 hours
+                path: '/'
+            });
 
+            return res.status(200).json({
+                message: "Owner logged in successfully",
+                owner: ownerData
+            });
+        }
+        else {
+            return res.status(400).json({ error: "Invalid email or password" });
+        }
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message });
     }
-}
+};
 
 
 module.exports.logoutOwner = async (req, res) => {
@@ -78,4 +77,4 @@ module.exports.logoutOwner = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
-}
+};

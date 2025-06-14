@@ -1,5 +1,3 @@
 export const API_BASE_URL = import.meta.env.PROD
-  ? 'https://curiofy-backend.onrender.com'  // Updated production URL
-  : window.location.hostname === 'localhost'
-    ? 'http://localhost:3000'
-    : `http://${window.location.hostname}:3000`;
+  ? 'https://curiofy-backend.onrender.com'  // Make sure no trailing slash
+  : 'http://localhost:3000';  // Simplified for development

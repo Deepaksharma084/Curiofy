@@ -16,10 +16,11 @@ app.use(cors({
     origin: [
         'https://curiofy.onrender.com',
         'http://localhost:5173'
-    ], // Added frontend production URL and Vite local host
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['set-cookie']
 }));
 
 app.use(cookieParser());

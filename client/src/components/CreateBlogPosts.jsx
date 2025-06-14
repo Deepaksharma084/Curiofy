@@ -39,11 +39,14 @@ export default function CreateBlogForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        credentials: 'include',  // Make sure this is present
         body: JSON.stringify({ ...blog, ownerId: owner._id }),
       });
 
+      // Log response for debugging
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to create blog");

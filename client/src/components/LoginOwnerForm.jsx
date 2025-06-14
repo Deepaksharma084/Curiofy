@@ -25,13 +25,17 @@ const LoginOwner = () => {
         try {
             const response = await fetch(`${API_BASE_URL}/owner/login`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: 'include',  // Make sure this is present
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
                 body: JSON.stringify(formData),
             });
 
+            // Log response for debugging
+            console.log('Login response status:', response.status);
             const data = await response.json();
-            console.log('Cookies after login:', document.cookie); // Add this line
+            console.log('Login response data:', data);
 
             if (response.ok && data.owner) {
                 setSuccess("Login successful!");
@@ -43,6 +47,7 @@ const LoginOwner = () => {
                 setError(data.error || "Invalid email or password");
             }
         } catch (error) {
+            console.error('Login error:', error);
             setError("An error occurred during login");
         }
     };
