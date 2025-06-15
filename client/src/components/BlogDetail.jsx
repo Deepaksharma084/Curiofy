@@ -35,7 +35,7 @@ const BlogDetail = () => {
         };
 
         fetchBlog()
-    }, [id]); // Remove API_BASE_URL from dependencies
+    }, [id]);
 
     if (loading)
         return (
@@ -62,6 +62,16 @@ const BlogDetail = () => {
                             alt={blog.title}
                             className="mx-auto sm:w-[30rem] object-cover rounded-2xl mb-8"
                         />
+                        
+                        {/* Date added above the title with styling */}
+                        <p className="text-sm text-gray-400 mb-2">
+                            Published on {new Date(blog.createdAt).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })}
+                        </p>
+
                         <h1 className="text-3xl font-bold text-white mb-4">{blog.title}</h1>
                         <p className="text-white/80 whitespace-pre-wrap">{blog.content}</p>
 

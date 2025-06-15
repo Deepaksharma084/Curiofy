@@ -69,7 +69,14 @@ const BlogListing = () => {
                                                 className="w-full h-full object-contain bg-[#00000077] rounded-xl transition-transform duration-300 group-hover:scale-105"
                                             />
                                         </div>
-                                        <div className="mt-4 space-y-3">
+                                        <p className="text-[0.8rem] text-gray-500 mt-4">
+                                            {new Date(blog.createdAt).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                            })}
+                                        </p>
+                                        <div className="mt-2 space-y-3">
                                             <h2 className="text-xl font-semibold text-white/90">{blog.title}</h2>
                                             <p className="text-sm text-white/60 line-clamp-3">
                                                 {blog.content.substring(0, 150)}....
