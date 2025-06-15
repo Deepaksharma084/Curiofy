@@ -63,7 +63,7 @@ export default function Navbar() {
         return () => document.removeEventListener('mousedown', handleClick);
     }, [showSearchPopup]);
 
-    // Add this useEffect for handling outside clicks
+    // Modify the existing useEffect for handling outside clicks
     useEffect(() => {
         function handleClickOutside(e) {
             if (adminDivRef.current &&
@@ -73,12 +73,15 @@ export default function Navbar() {
             }
         }
 
+        // Handle both mouse and touch events
         if (showAdminDiv) {
             document.addEventListener('mousedown', handleClickOutside);
+            document.addEventListener('touchstart', handleClickOutside);
         }
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
         };
     }, [showAdminDiv]);
 
