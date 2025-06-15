@@ -127,9 +127,9 @@ export default function Navbar() {
     const renderSearchPopup = () => (
         <div
             ref={popupRef}
-            className="absolute left-0 mt-2 w-full max-w-lg bg-white/10 rounded-xl shadow-xl border border-white/20 backdrop-blur-xl"
+            className="absolute -right-20 mt-2 sm:w-[25rem] w-[20rem] h-[14rem] overflow-scroll max-w-lg bg-white/10 rounded-xl shadow-xl border border-white/20 backdrop-blur-xl"
             style={{ top: '110%' }}
-            onMouseDown={e => e.preventDefault()} // This is fine, it prevents the input from blurring
+            onMouseDown={e => e.preventDefault()}
         >
             {isSearching ? (
                 <div className="p-4 text-center text-gray-500">Searching...</div>
@@ -143,7 +143,6 @@ export default function Navbar() {
                             className="px-4 py-3 hover:bg-[#312441] rounded-xl cursor-pointer"
                         >
                             <div
-                                // ✨ THE FIX IS HERE: Changed from onClick to onMouseDown ✨
                                 onMouseDown={() => {
                                     console.log('Navigating on mousedown to:', blog._id);
                                     setShowSearchPopup(false);
