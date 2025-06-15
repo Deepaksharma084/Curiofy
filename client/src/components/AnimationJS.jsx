@@ -108,11 +108,11 @@ const MWGEffect = () => {
 
         <section className={`${Animation.mwg_effect000}`} ref={rootRef}>
             <div className={Animation.medias}>
-                <div className={Animation.media} onClick={() => handleCategoryClick("Technology")}>
+                <div className={Animation.media} onClick={() => handleCategoryClick("Tech and electronics")}>
                     <img src={img1} alt="" />
                     <span className={Animation.categoryText}>Tech and electronics</span>
                 </div>
-                <div className={Animation.media} onClick={() => handleCategoryClick("Health & Wellness")}>
+                <div className={Animation.media} onClick={() => handleCategoryClick("Health")}>
                     <img src={img2} alt="" />
                     <span className={Animation.categoryText}>Health</span>
                 </div>
@@ -124,11 +124,11 @@ const MWGEffect = () => {
                     <img src={img4} alt="" />
                     <span className={Animation.categoryText}>Food & Recipes</span>
                 </div>
-                <div className={Animation.media} onClick={() => handleCategoryClick("Personal Dev")}>
+                <div className={Animation.media} onClick={() => handleCategoryClick("Growth")}>
                     <img src={img5} alt="" />
                     <span className={Animation.categoryText}>Growth</span>
                 </div>
-                <div className={Animation.media} onClick={() => handleCategoryClick("Finance & Investing")}>
+                <div className={Animation.media} onClick={() => handleCategoryClick("Finance")}>
                     <img src={img6} alt="" />
                     <span className={Animation.categoryText}>Finance</span>
                 </div>

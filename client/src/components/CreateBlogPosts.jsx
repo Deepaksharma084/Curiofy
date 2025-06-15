@@ -129,11 +129,11 @@ export default function CreateBlogForm() {
                 required
               >
                 <option value="" disabled className="text-gray-800">Select a category</option>
-                <option value="Technology" className="text-gray-800">Tech and electronics</option>
-                <option value="Health & Wellness" className="text-gray-800">Health</option>
+                <option value="Tech and electronics" className="text-gray-800">Tech and electronics</option>
+                <option value="Health" className="text-gray-800">Health</option>
                 <option value="Travel" className="text-gray-800">Travel</option>
                 <option value="Food & Recipes" className="text-gray-800">Food & Recipes</option>
-                <option value="Personal Dev" className="text-gray-800">Growth</option>
+                <option value="Growth" className="text-gray-800">Growth</option>
                 <option value="Finance & Investing" className="text-gray-800">Finance</option>
                 <option value="Learning" className="text-gray-800">Learning</option>
                 <option value="Gaming" className="text-gray-800">Gaming</option>

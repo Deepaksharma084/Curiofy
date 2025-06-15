@@ -1,19 +1,88 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import AdminDiv from './AdminDiv.jsx';
 import Hamburger from './Hamburger.jsx';
 import SettingsIcon from './SettingsIcon.jsx'
 import gsap from 'gsap';
+import { API_BASE_URL } from '../config';
 
 export default function Navbar() {
     const [searchQuery, setSearchQuery] = useState('');
     const [showAdminDiv, setShowAdminDiv] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
+    const [showSearchPopup, setShowSearchPopup] = useState(false);
+    const [isSearching, setIsSearching] = useState(false);
+    const popupRef = useRef(null);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleSearch = (e) => {
+    console.log('Navigate function:', navigate); // Debug log
+
+    // Debounced search
+    useEffect(() => {
+        if (!searchQuery.trim()) {
+            setSearchResults([]);
+            setShowSearchPopup(false);
+            setIsSearching(false);
+            return;
+        }
+
+        setIsSearching(true);
+        const timeout = setTimeout(async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/blogs/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                if (!res.ok) throw new Error('Failed to search');
+                const data = await res.json();
+                setSearchResults(data.blogs || []);
+                setIsSearching(false);
+                setShowSearchPopup(true);
+            } catch (err) {
+                console.error('Search error:', err);
+                setSearchResults([]);
+                setShowSearchPopup(false);
+                setIsSearching(false);
+            }
+        }, 500); // Increased debounce time to 500ms
+
+        return () => clearTimeout(timeout);
+    }, [searchQuery]);
+
+    // Hide popup on outside click
+    useEffect(() => {
+        function handleClick(e) {
+            if (popupRef.current && !popupRef.current.contains(e.target)) {
+                setShowSearchPopup(false);
+            }
+        }
+        if (showSearchPopup) {
+            document.addEventListener('mousedown', handleClick);
+        }
+        return () => document.removeEventListener('mousedown', handleClick);
+    }, [showSearchPopup]);
+
+    const handleSearch = async (e) => {
         e.preventDefault();
-        console.log('Searching for:', searchQuery);
+        if (!searchQuery.trim()) {
+            setSearchResults([]);
+            setShowSearchPopup(false);
+            setIsSearching(false);
+            return;
+        }
+        setIsSearching(true);
+        try {
+            const res = await fetch(`${API_BASE_URL}/blogs/search?q=${encodeURIComponent(searchQuery.trim())}`);
+            if (!res.ok) throw new Error('Failed to search');
+            const data = await res.json();
+            setSearchResults(data.blogs || []);
+            setIsSearching(false);
+            setShowSearchPopup(true);
+        } catch (err) {
+            setSearchResults([]);
+            setIsSearching(false);
+            setShowSearchPopup(true);
+        }
     };
 
     const handleContactClick = (e) => {
@@ -31,7 +100,7 @@ export default function Navbar() {
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
-        setShowAdminDiv(false); // Close admin div when opening mobile menu
+        setShowAdminDiv(false);
     };
 
     useEffect(() => {
@@ -49,6 +118,59 @@ export default function Navbar() {
         });
     }, []);
 
+    useEffect(() => {
+        setShowSearchPopup(false);
+        setSearchQuery('');
+    }, [location.pathname]);
+
+    // --- Search popup UI ---
+    const renderSearchPopup = () => (
+        <div
+            ref={popupRef}
+            className="absolute left-0 mt-2 w-full max-w-lg bg-white/10 rounded-xl shadow-xl border border-white/20 backdrop-blur-xl"
+            style={{ top: '110%' }}
+            onMouseDown={e => e.preventDefault()} // This is fine, it prevents the input from blurring
+        >
+            {isSearching ? (
+                <div className="p-4 text-center text-gray-500">Searching...</div>
+            ) : searchResults.length === 0 ? (
+                <div className="p-4 text-center text-gray-500">No results found</div>
+            ) : (
+                <ul>
+                    {searchResults.map(blog => (
+                        <li
+                            key={blog._id}
+                            className="px-4 py-3 hover:bg-[#312441] rounded-xl cursor-pointer"
+                        >
+                            <div
+                                // ✨ THE FIX IS HERE: Changed from onClick to onMouseDown ✨
+                                onMouseDown={() => {
+                                    console.log('Navigating on mousedown to:', blog._id);
+                                    setShowSearchPopup(false);
+                                    setSearchQuery('');
+                                    navigate(`/blog/${blog._id}`);
+                                }}
+                                className="flex items-center gap-3 w-full"
+                            >
+                                <img
+                                    src={blog.imageUrl}
+                                    alt={blog.title}
+                                    className="w-12 h-12 object-cover rounded-lg border border-gray-200"
+                                />
+                                <div>
+                                    <div className="font-semibold text-white">{blog.title}</div>
+                                    <div className="text-xs text-gray-500">
+                                        {blog.category} · {new Date(blog.createdAt).toLocaleDateString()}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+
     return (
         <nav className={`z-40 top-5 left-0 right-0 ${styles.authContainer}`}>
             <div className={styles.overlay}>
@@ -61,20 +183,32 @@ export default function Navbar() {
                         </div>
 
                         {/* Desktop Menu */}
-                        <div className="hidden md:flex items-center space-x-8">
+                        <div className="hidden md:flex items-center space-x-8 relative">
                             <Link to="/" className="topToBottom text-white hover:text-gray-300 transition-colors">
                                 Home
                             </Link>
-                            <form onSubmit={handleSearch} className="topToBottom relative">
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    handleSearch(e);
+                                }}
+                                className="topToBottom relative w-72"
+                            >
                                 <input
                                     type="text"
                                     value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onChange={e => {
+                                        setSearchQuery(e.target.value);
+                                        setShowSearchPopup(true);
+                                    }}
                                     placeholder="Search..."
-                                    className="w-64 px-4 py-1 rounded-full bg-white/10 border border-white/20 
+                                    className="w-full px-4 py-1 rounded-full bg-white/10 border border-white/20 
                                          text-white placeholder-white/70 focus:outline-none focus:ring-2 
                                          focus:ring-white/30 focus:border-transparent"
+                                    autoComplete="off"
+                                    onFocus={() => searchQuery && setShowSearchPopup(true)}
                                 />
+                                {showSearchPopup && searchQuery && renderSearchPopup()}
                             </form>
                             <a
                                 href="#contact"
@@ -98,16 +232,22 @@ export default function Navbar() {
                         {/* Mobile Menu Button */}
                         <div className="md:hidden flex items-center gap-2 z-50">
                             {/* Search box for mobile */}
-                            <form onSubmit={handleSearch} className="relative">
+                            <form onSubmit={handleSearch} className="relative w-32">
                                 <input
                                     type="text"
                                     value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onChange={e => {
+                                        setSearchQuery(e.target.value);
+                                        setShowSearchPopup(true);
+                                    }}
                                     placeholder="Search..."
-                                    className="w-32 px-4 py-1 rounded-full bg-white/10 border border-white/20 
+                                    className="w-full px-4 py-1 rounded-full bg-white/10 border border-white/20 
                                              text-white placeholder-white/70 focus:outline-none focus:ring-2 
                                              focus:ring-white/30 focus:border-transparent"
+                                    autoComplete="off"
+                                    onFocus={() => searchQuery && setShowSearchPopup(true)}
                                 />
+                                {showSearchPopup && searchQuery && renderSearchPopup()}
                             </form>
                             <Hamburger
                                 isOpen={isMobileMenuOpen}

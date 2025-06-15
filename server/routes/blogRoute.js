@@ -49,6 +49,30 @@ router.get("/category/:category", async (req, res) => {
   }
 });
 
+// Place this FIRST, before any route with :id
+router.get('/search', async (req, res) => {
+  try {
+    let q = req.query.q || '';
+    q = q.trim();
+    if (!q) return res.json({ blogs: [] });
+
+    const regex = new RegExp(q, 'i');
+    const blogs = await Blog.find({
+      $or: [
+        { title: regex },
+        { content: regex },
+        { category: regex }
+      ]
+    }).sort({ createdAt: -1 }).limit(10);
+
+    res.json({ blogs });
+  } catch (err) {
+    console.error('Search error:', err);
+    res.status(500).json({ blogs: [] });
+  }
+});
+
+// Now the :id route
 router.get("/:id", async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
