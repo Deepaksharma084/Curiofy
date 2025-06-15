@@ -15,6 +15,7 @@ export default function Navbar() {
     const [showSearchPopup, setShowSearchPopup] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
     const popupRef = useRef(null);
+    const adminDivRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -61,6 +62,25 @@ export default function Navbar() {
         }
         return () => document.removeEventListener('mousedown', handleClick);
     }, [showSearchPopup]);
+
+    // Add this useEffect for handling outside clicks
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (adminDivRef.current &&
+                !adminDivRef.current.contains(e.target) &&
+                !e.target.closest('button')) {
+                setShowAdminDiv(false);
+            }
+        }
+
+        if (showAdminDiv) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showAdminDiv]);
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -221,7 +241,7 @@ export default function Navbar() {
                                     <SettingsIcon />
                                 </div>
                                 {showAdminDiv && (
-                                    <div className="absolute right-0 mt-4 w-48 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
+                                    <div ref={adminDivRef} className="absolute right-0 mt-4 w-48 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
                                         <AdminDiv />
                                     </div>
                                 )}
@@ -277,7 +297,7 @@ export default function Navbar() {
                                         <SettingsIcon />
                                     </button>
                                     {showAdminDiv && (
-                                        <div className="mt-2 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
+                                        <div ref={adminDivRef} className="mt-2 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
                                             <AdminDiv />
                                         </div>
                                     )}
