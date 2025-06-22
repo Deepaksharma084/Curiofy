@@ -18,7 +18,7 @@ const BlogDetail = () => {
         const fetchBlog = async () => {
             try {
                 const res = await fetch(`${API_BASE_URL}/blogs/${id}`, {
-                    credentials: 'include' // Added this to include cookies
+                    credentials: 'include'
                 });
 
                 if (!res.ok) {
@@ -34,7 +34,10 @@ const BlogDetail = () => {
             }
         };
 
-        fetchBlog()
+        fetchBlog();
+
+        // Scroll to top when this component mounts or id changes
+        window.scrollTo(0, 0);
     }, [id]);
 
     if (loading)
@@ -55,7 +58,7 @@ const BlogDetail = () => {
     return (
         <div className={styles.blogContainerBlackBg}>
             <div className={styles.overlay}>
-                <div className="px-2 sm:px-10 py-24">
+                <div className="px-2 sm:px-10 py-10">
                     <div className="mx-auto sm:w-screen bg-white/10 rounded-3xl p-8 shadow-2xl">
                         <img
                             src={blog.imageUrl}

@@ -31,6 +31,7 @@ const BlogListing = () => {
         };
 
         fetchBlogs();
+        window.scrollTo(0, 0);
     }, [category, currentPage]);
 
     const handlePageChange = (newPage) => {

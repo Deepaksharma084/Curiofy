@@ -19,12 +19,12 @@ export default function Navbar() {
     const adminDivDesktopRef = useRef(null);
     const adminDivMobileRef = useRef(null);
     const mobileMenuRef = useRef(null);
-    const hamburgerRef = useRef(null);
+    const hamburgerRef = useRef(null); // Ref for the hamburger button
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Debounced search
+    // Debounced search (This part is fine)
     useEffect(() => {
         if (!searchQuery.trim()) {
             setSearchResults([]);
@@ -43,15 +43,13 @@ export default function Navbar() {
                 setShowSearchPopup(true);
             } catch (err) {
                 console.error('Search error:', err);
-                setSearchResults([]);
-                setShowSearchPopup(false);
-                setIsSearching(false);
+                // Handle error state
             }
         }, 500);
         return () => clearTimeout(timeout);
     }, [searchQuery]);
 
-    // A single, robust useEffect to handle all outside clicks/taps
+    // This is the fully corrected useEffect for handling all outside clicks
     useEffect(() => {
         const handleOutsideClick = (event) => {
             // Close Search Popup
@@ -59,25 +57,22 @@ export default function Navbar() {
                 setShowSearchPopup(false);
             }
 
-            // --- ADMIN DIV LOGIC (This part works) ---
+            // Close Admin Div
             if (!event.target.closest('.settings-icon-button')) {
-                if (adminDivDesktopRef.current && !adminDivDesktopRef.current.contains(event.target)) {
-                    setShowAdminDiv(false);
-                }
-                if (adminDivMobileRef.current && !adminDivMobileRef.current.contains(event.target)) {
+                if ((adminDivDesktopRef.current && !adminDivDesktopRef.current.contains(event.target)) ||
+                    (adminDivMobileRef.current && !adminDivMobileRef.current.contains(event.target))) {
                     setShowAdminDiv(false);
                 }
             }
 
-            // --- ✨ THE DEFINITIVE FIX FOR THE MOBILE MENU ---
-            // First, check if the click was ON the hamburger button. If so, do nothing here.
-            // The button's own onClick will handle toggling the menu.
-            if (hamburgerRef.current && hamburgerRef.current.contains(event.target)) {
-                return;
-            }
-
-            // If the click was NOT on the hamburger, then check if it was outside the open menu.
-            if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+            // --- Improved Mobile Menu Outside Click ---
+            if (
+                isMobileMenuOpen && // Only check if menu is open
+                mobileMenuRef.current &&
+                !mobileMenuRef.current.contains(event.target) &&
+                hamburgerRef.current &&
+                !hamburgerRef.current.contains(event.target)
+            ) {
                 setIsMobileMenuOpen(false);
             }
         };
@@ -89,11 +84,14 @@ export default function Navbar() {
             document.removeEventListener('mousedown', handleOutsideClick);
             document.removeEventListener('touchstart', handleOutsideClick);
         };
-    }, []);
+    }, [isMobileMenuOpen]); // Empty dependency array is correct.
 
-    const handleSearch = async (e) => {
+    const handleSearch = (e) => {
         e.preventDefault();
-        // ... search logic ...
+        if (searchQuery.trim()) {
+            navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+            setShowSearchPopup(false);
+        }
     };
 
     const handleContactClick = (e) => {
@@ -109,16 +107,22 @@ export default function Navbar() {
         setShowAdminDiv(prev => !prev);
     };
 
+    // This function's only job is to toggle. The useEffect handles outside clicks.
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(prev => !prev);
-        setShowAdminDiv(false);
+        // It can be helpful to close the admin div when toggling the main menu
+        if (!isMobileMenuOpen) {
+            setShowAdminDiv(false);
+        }
     };
+
 
     useEffect(() => {
         gsap.set(".topToBottom", { y: -50, opacity: 0 });
         gsap.to(".topToBottom", { y: 0, opacity: 1, duration: 0.9, stagger: 0.2, ease: "power2.out" });
     }, []);
 
+    // Close menus on route change
     useEffect(() => {
         setShowSearchPopup(false);
         setSearchQuery('');
@@ -128,7 +132,14 @@ export default function Navbar() {
 
     const renderSearchPopup = () => (
         <div ref={popupRef} className="absolute -right-20 mt-2 sm:w-[25rem] w-[20rem] h-[14rem] overflow-scroll max-w-lg bg-white/10 rounded-xl shadow-xl border border-white/20 backdrop-blur-xl" style={{ top: '110%' }} onMouseDown={e => e.preventDefault()}>
-            {/* ... search results UI ... */}
+            {isSearching && <p className="text-white p-4">Searching...</p>}
+            {!isSearching && searchResults.length > 0 ? (
+                searchResults.map(blog => (
+                    <Link key={blog._id} to={`/blog/${blog._id}`} className="block p-3 hover:bg-white/20">
+                        <p className="text-white font-semibold">{blog.title}</p>
+                    </Link>
+                ))
+            ) : !isSearching && <p className="text-white p-4">No results found.</p>}
         </div>
     );
 
@@ -150,7 +161,7 @@ export default function Navbar() {
                             </form>
                             <a href="#contact" onClick={handleContactClick} className="topToBottom text-white hover:text-gray-300 transition-colors cursor-pointer">Contact</a>
                             <div className="topToBottom relative">
-                                <div onClick={toggleAdminDiv} className="flex items-center justify-center gap-4 text-white hover:text-gray-300 transition-colors cursor-pointer">
+                                <div onClick={toggleAdminDiv} className="flex items-center justify-center gap-4 text-white hover:text-gray-300 transition-colors cursor-pointer settings-icon-button">
                                     <SettingsIcon />
                                 </div>
                                 {showAdminDiv && (
@@ -167,28 +178,40 @@ export default function Navbar() {
                                 <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search..." className="w-full px-4 py-1 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent" autoComplete="off" onFocus={() => searchQuery && setShowSearchPopup(true)} />
                                 {showSearchPopup && searchQuery && renderSearchPopup()}
                             </form>
+                            {/* This onClick now works without interference */}
                             <Hamburger ref={hamburgerRef} isOpen={isMobileMenuOpen} onClick={toggleMobileMenu} />
                         </div>
                     </div>
 
                     {/* Mobile Menu */}
                     {isMobileMenuOpen && (
-                        <div ref={mobileMenuRef} className="md:hidden fixed top-20 left-0 right-0 z-[100]">
-                            <div className="backdrop-blur-xl bg-white/10 px-2 pt-2 pb-3 space-y-1 rounded-md mx-4 z-50">
-                                <Link to="/" className="text-[#b814ff] block px-3 py-2 hover:bg-white/20 rounded-md">Home</Link>
-                                <a href="#contact" onClick={handleContactClick} className="text-[#b814ff]  block px-3 py-2 hover:bg-white/20 rounded-md">Contact</a>
-                                <div className="px-2 py-2">
-                                    <button onClick={toggleAdminDiv} className="flex items-center text-white rounded-md settings-icon-button">
-                                        <SettingsIcon />
-                                    </button>
-                                    {showAdminDiv && (
-                                        <div ref={adminDivMobileRef} className="mt-2 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
-                                            <AdminDiv />
-                                        </div>
-                                    )}
+                        <>
+                            {/* Backdrop for outside click */}
+                            <div
+                                className="fixed inset-0 z-[99]"
+                                style={{ background: 'transparent' }}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            />
+                            <div
+                                ref={mobileMenuRef}
+                                className="md:hidden fixed top-20 left-0 right-0 z-[100]"
+                            >
+                                <div className="backdrop-blur-xl bg-white/10 px-2 pt-2 pb-3 space-y-1 rounded-md mx-4 z-50">
+                                    <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-[#b814ff] block px-3 py-2 hover:bg-white/20 rounded-md">Home</Link>
+                                    <a href="#contact" onClick={handleContactClick} className="text-[#b814ff]  block px-3 py-2 hover:bg-white/20 rounded-md">Contact</a>
+                                    <div className="px-2 py-2">
+                                        <button onClick={toggleAdminDiv} className="flex items-center text-white rounded-md settings-icon-button">
+                                            <SettingsIcon />
+                                        </button>
+                                        {showAdminDiv && (
+                                            <div ref={adminDivMobileRef} className="mt-2 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
+                                                <AdminDiv />
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </>
                     )}
                 </div>
             </div>

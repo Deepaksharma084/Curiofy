@@ -134,7 +134,7 @@ export default function CreateBlogForm() {
                 <option value="Travel" className="text-gray-800">Travel</option>
                 <option value="Food & Recipes" className="text-gray-800">Food & Recipes</option>
                 <option value="Growth" className="text-gray-800">Growth</option>
-                <option value="Finance & Investing" className="text-gray-800">Finance</option>
+                <option value="Finance" className="text-gray-800">Finance</option>
                 <option value="Learning" className="text-gray-800">Learning</option>
                 <option value="Gaming" className="text-gray-800">Gaming</option>
                 <option value="DIY & Crafts" className="text-gray-800">DIY & Crafts</option>
