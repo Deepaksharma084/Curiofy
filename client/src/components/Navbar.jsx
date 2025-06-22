@@ -129,12 +129,37 @@ export default function Navbar() {
     }, [location.pathname]);
 
     const renderSearchPopup = () => (
-        <div ref={popupRef} className="absolute -right-20 mt-2 sm:w-[25rem] w-[20rem] h-[14rem] overflow-scroll max-w-lg bg-white/10 rounded-xl shadow-xl border border-white/20 backdrop-blur-xl" style={{ top: '110%' }} onMouseDown={e => e.preventDefault()}>
+        <div
+            ref={popupRef}
+            className="absolute -right-20 mt-2 sm:w-[25rem] w-[20rem] h-[14rem] overflow-scroll max-w-lg bg-white/10 rounded-xl shadow-xl border border-white/20 backdrop-blur-xl"
+            style={{ top: '110%' }}
+            onMouseDown={e => e.preventDefault()}
+        >
             {isSearching && <p className="text-white p-4">Searching...</p>}
             {!isSearching && searchResults.length > 0 ? (
                 searchResults.map(blog => (
-                    <Link key={blog._id} to={`/blog/${blog._id}`} className="block p-3 hover:bg-white/20">
-                        <p className="text-white font-semibold">{blog.title}</p>
+                    <Link
+                        key={blog._id}
+                        to={`/blog/${blog._id}`}
+                        className="flex items-center gap-3 p-3 hover:bg-white/20"
+                    >
+                        {/* Blog Image */}
+                        {blog.imageUrl && (
+                            <img
+                                src={blog.imageUrl}
+                                alt={blog.title}
+                                className="w-14 h-14 object-cover rounded-md border border-white/20"
+                            />
+                        )}
+                        <div>
+                            <p className="text-white font-semibold">{blog.title}</p>
+                            {/* Creation Date */}
+                            {blog.createdAt && (
+                                <p className="text-xs text-white/70">
+                                    {new Date(blog.createdAt).toLocaleDateString()}
+                                </p>
+                            )}
+                        </div>
                     </Link>
                 ))
             ) : !isSearching && <p className="text-white p-4">No results found.</p>}
@@ -202,7 +227,7 @@ export default function Navbar() {
                                             <SettingsIcon />
                                         </button>
                                         {showAdminDiv && (
-                                            <div ref={adminDivMobileRef} className="mt-2 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
+                                            <div ref={adminDivMobileRef} className="mt-2 backdrop-blur-xl bg-white/20 rounded-md shadow-lg py-1">
                                                 <AdminDiv />
                                             </div>
                                         )}
