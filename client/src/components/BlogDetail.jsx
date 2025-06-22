@@ -59,7 +59,7 @@ const BlogDetail = () => {
         <div className={styles.blogContainerBlackBg}>
             <div className={styles.overlay}>
                 <div className="px-2 sm:px-10 py-10">
-                    <div className="mx-auto sm:w-screen bg-white/10 rounded-3xl p-8 shadow-2xl">
+                    <div className="mx-auto sm:w-screen bg-white/10 rounded-3xl md:p-16 p-3 py-8 shadow-2xl">
                         <img
                             src={blog.imageUrl}
                             alt={blog.title}

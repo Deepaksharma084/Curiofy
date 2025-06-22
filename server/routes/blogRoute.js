@@ -1,13 +1,9 @@
-// routes/blogs.js
 const express = require("express");
 const Blog = require("../models/blog-model");
 const isOwnerLogdin = require("../middleware/isOwnerLogdin");
 const router = express.Router();
 
 router.post("/create", isOwnerLogdin, async (req, res) => {
-  console.log("Received blog creation request:", req.body);
-  console.log("Authenticated owner:", req.owner);
-
   const { title, imageUrl, content, category } = req.body;
   try {
     const newBlog = new Blog({
@@ -49,7 +45,7 @@ router.get("/category/:category", async (req, res) => {
   }
 });
 
-// Place this FIRST, before any route with :id
+//need to place this FIRST, before any route with :id
 router.get('/search', async (req, res) => {
   try {
     let q = req.query.q || '';
@@ -72,7 +68,6 @@ router.get('/search', async (req, res) => {
   }
 });
 
-// Now the :id route
 router.get("/:id", async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
@@ -90,7 +85,6 @@ router.put("/edit/:id", isOwnerLogdin, async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
 
-    // Check if blog exists
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
@@ -121,7 +115,6 @@ router.delete("/delete/:id", isOwnerLogdin, async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
 
-    // Check if blog exists
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }

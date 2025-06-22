@@ -26,8 +26,7 @@ const RegisterOwner = () => {
             });
 
             const data = await res.json();
-            console.log("Server Response:", data);
-
+            
             if (res.ok) {
                 alert(data.message || "Owner registered successfully!");
             } else {

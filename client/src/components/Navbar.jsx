@@ -24,7 +24,6 @@ export default function Navbar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Debounced search (This part is fine)
     useEffect(() => {
         if (!searchQuery.trim()) {
             setSearchResults([]);
@@ -43,13 +42,11 @@ export default function Navbar() {
                 setShowSearchPopup(true);
             } catch (err) {
                 console.error('Search error:', err);
-                // Handle error state
             }
         }, 500);
         return () => clearTimeout(timeout);
     }, [searchQuery]);
 
-    // This is the fully corrected useEffect for handling all outside clicks
     useEffect(() => {
         const handleOutsideClick = (event) => {
             // Close Search Popup
@@ -86,7 +83,7 @@ export default function Navbar() {
             document.removeEventListener('mousedown', handleOutsideClick);
             document.removeEventListener('touchstart', handleOutsideClick);
         };
-    }, [isMobileMenuOpen]); // Empty dependency array is correct.
+    }, [isMobileMenuOpen]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -117,7 +114,6 @@ export default function Navbar() {
             setShowAdminDiv(false);
         }
     };
-
 
     useEffect(() => {
         gsap.set(".topToBottom", { y: -50, opacity: 0 });

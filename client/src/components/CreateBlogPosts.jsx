@@ -16,7 +16,7 @@ export default function CreateBlogForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(""); //success state
 
-  //useEffect to debug and redirect if owner is not present
+  //useEffect to redirect if owner is not present
   useEffect(() => {
     if (!owner) {
       navigate("/owner/login");
@@ -39,14 +39,11 @@ export default function CreateBlogForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',  // Make sure this is present
+        credentials: 'include',
         body: JSON.stringify({ ...blog, ownerId: owner._id }),
       });
 
-      // Log response for debugging
-      console.log('Response status:', response.status);
       const data = await response.json();
-      console.log('Response data:', data);
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to create blog");
@@ -62,7 +59,7 @@ export default function CreateBlogForm() {
       });
       setTimeout(() => {
         setSuccess("");
-        navigate('/'); // Navigate to home page instead of create page
+        navigate('/');
       }, 1500);
     } catch (error) {
       console.error("Detailed error:", error);

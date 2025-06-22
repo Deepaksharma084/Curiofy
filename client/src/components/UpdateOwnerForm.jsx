@@ -1,4 +1,3 @@
-// New file: client/src/components/UpdateOwnerForm.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './AuthPage.module.css';
@@ -9,7 +8,7 @@ const UpdateOwnerForm = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const [showPassword, setShowPassword] = useState(false); // <-- Add this line
+    const [showPassword, setShowPassword] = useState(false);
     const { setOwner } = useAuth();
     const navigate = useNavigate();
 

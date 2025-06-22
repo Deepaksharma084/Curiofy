@@ -15,7 +15,7 @@ const LoginOwner = () => {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        // Clear messages when user starts typing
+        // Clears messages when user starts typing
         setError("");
         setSuccess("");
     };
@@ -32,10 +32,7 @@ const LoginOwner = () => {
                 body: JSON.stringify(formData),
             });
 
-            // Log response for debugging
-            console.log('Login response status:', response.status);
             const data = await response.json();
-            console.log('Login response data:', data);
 
             if (response.ok && data.owner) {
                 setSuccess("Login successful!");
