@@ -17,7 +17,7 @@ export default function Footer() {
                     </div>
                     <div className="child2 flex flex-col p-8 items-center h-56 ">
                         <h1 className="text-2xl font-bold text-zinc-300">Contact Us</h1>
-                        <p className="text-zinc-400 mt-2">deepak@male.com</p>
+                        <p className="text-zinc-400 mt-2">dk3433045@gmail.com</p>
                         <p className="text-zinc-400 mt-4">Ram Reddy Nagar ,JDM, HYD 500055</p>
                         <p className="text-zinc-400 mt-1">+91 1234567890</p>
                     </div>
@@ -37,7 +37,7 @@ export default function Footer() {
 
                 <div className="parent3 relative w-screen flex justify-center ">
                     <div className="child1 flex items-center h-16 w-screen">
-                        <p className='text-zinc-400 text-sm absolute right-8'>© 2023 Curiofy. All rights reserved.</p>
+                        <p className='text-zinc-400 text-sm absolute right-8'>© 2025 Curiofy. All rights reserved.</p>
                     </div>
                 </div>
             </div>

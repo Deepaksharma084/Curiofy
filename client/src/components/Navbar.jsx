@@ -57,21 +57,23 @@ export default function Navbar() {
                 setShowSearchPopup(false);
             }
 
-            // Close Admin Div
-            if (!event.target.closest('.settings-icon-button')) {
-                if ((adminDivDesktopRef.current && !adminDivDesktopRef.current.contains(event.target)) ||
-                    (adminDivMobileRef.current && !adminDivMobileRef.current.contains(event.target))) {
-                    setShowAdminDiv(false);
-                }
+            // Close Admin Div (only if click is outside BOTH admin divs and settings icon)
+            if (
+                !event.target.closest('.settings-icon-button') &&
+                (!adminDivDesktopRef.current || !adminDivDesktopRef.current.contains(event.target)) &&
+                (!adminDivMobileRef.current || !adminDivMobileRef.current.contains(event.target))
+            ) {
+                setShowAdminDiv(false);
             }
 
-            // --- Improved Mobile Menu Outside Click ---
+            // Close Mobile Menu (only if click is outside menu, hamburger, AND admin div)
             if (
-                isMobileMenuOpen && // Only check if menu is open
+                isMobileMenuOpen &&
                 mobileMenuRef.current &&
                 !mobileMenuRef.current.contains(event.target) &&
                 hamburgerRef.current &&
-                !hamburgerRef.current.contains(event.target)
+                !hamburgerRef.current.contains(event.target) &&
+                (!adminDivMobileRef.current || !adminDivMobileRef.current.contains(event.target))
             ) {
                 setIsMobileMenuOpen(false);
             }
