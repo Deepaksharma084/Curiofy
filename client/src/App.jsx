@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import RegisterOwner from "./components/RegisterOwnerForm";
 import LoginOwner from "./components/LoginOwnerForm";
 import CreateBlogForm from "./components/CreateBlogPosts";
+import UpdateOwnerForm from "./components/UpdateOwnerForm";
 import Navbar from './components/Navbar';
 import BlogListing from './components/BlogListing';
 import Home from './components/Home';
@@ -39,6 +40,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/owner/updateOwner" element={<UpdateOwnerForm />} />
             <Route path="/blogs/:category" element={<BlogListing />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/blog/edit/:id" element={<BlogUpdate />} />

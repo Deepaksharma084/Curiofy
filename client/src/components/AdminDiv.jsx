@@ -26,6 +26,7 @@ export default function AdminDiv() {
             <Link to='/owner/login' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Login</Link>
             <Link to='/owner/register' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Register</Link>
             <Link to='/blogs/create' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Create Blogs</Link>
+            <Link to='/owner/updateOwner' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Change Credientials</Link>
         </div>
     );
 }

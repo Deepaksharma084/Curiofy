@@ -78,3 +78,25 @@ module.exports.logoutOwner = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+
+module.exports.updateOwner = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const updates = {};
+        if (email) updates.email = email;
+        if (password) {
+            const salt = await bcrypt.genSalt(12);
+            const hashedPassword = await bcrypt.hash(password, salt);
+            updates.password = hashedPassword;
+        }
+        const updatedOwner = await ownerModel.findByIdAndUpdate(
+            req.owner._id,
+            updates,
+            { new: true, select: "-password" }
+        );
+        res.status(200).json({ message: "Owner updated successfully", owner: updatedOwner });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
