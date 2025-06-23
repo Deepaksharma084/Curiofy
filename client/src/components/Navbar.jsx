@@ -220,8 +220,8 @@ export default function Navbar() {
                                 className="md:hidden fixed top-20 left-0 right-0 z-[100]"
                             >
                                 <div className="backdrop-blur-xl bg-white/10 px-2 pt-2 pb-3 space-y-1 rounded-md mx-4 z-50">
-                                    <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-[#b814ff] block px-3 py-2 hover:bg-white/20 rounded-md">Home</Link>
-                                    <a href="#contact" onClick={handleContactClick} className="text-[#b814ff]  block px-3 py-2 hover:bg-white/20 rounded-md">Contact</a>
+                                    <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-white block px-3 py-2 hover:bg-white/20 rounded-md">Home</Link>
+                                    <a href="#contact" onClick={handleContactClick} className="text-white  block px-3 py-2 hover:bg-white/20 rounded-md">Contact</a>
                                     <div className="px-2 py-2">
                                         <button onClick={toggleAdminDiv} className="flex items-center text-white rounded-md settings-icon-button">
                                             <SettingsIcon />

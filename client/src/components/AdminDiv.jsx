@@ -23,10 +23,10 @@ export default function AdminDiv() {
     return (
         <div className="flex z-50 flex-col">
             <p className='px-4 text-zinc-400'>For Admin only</p>
-            <Link to='/owner/login' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Login</Link>
-            <Link to='/owner/register' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Register</Link>
-            <Link to='/blogs/create' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Create Blogs</Link>
-            <Link to='/owner/updateOwner' className="rightToLeft px-4 py-2 text-xl text-bold text-[#b814ff] hover:bg-[#702718]">Change Credientials</Link>
+            <Link to='/owner/login' className="rightToLeft px-4 py-2 text-xl text-bold text-white hover:bg-[#702718]">Login</Link>
+            <Link to='/owner/register' className="rightToLeft px-4 py-2 text-xl text-bold text-white hover:bg-[#702718]">Register</Link>
+            <Link to='/blogs/create' className="rightToLeft px-4 py-2 text-xl text-bold text-white hover:bg-[#702718]">Create Blogs</Link>
+            <Link to='/owner/updateOwner' className="rightToLeft px-4 py-2 text-xl text-bold text-white hover:bg-[#702718]">Change Credientials</Link>
         </div>
     );
 }

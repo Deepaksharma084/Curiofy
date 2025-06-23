@@ -146,7 +146,7 @@ export default function CreateBlogForm() {
               <textarea
                 className="w-full px-4 py-3 bg-transparent focus:ring-0 border-0 border-b border-white 
                          text-white placeholder-white/50 focus:border-white focus:outline-none 
-                         focus:ring-white/30 transition-all duration-300 min-h-[100px] resize-none"
+                         focus:ring-white/30 transition-all duration-300 min-h-[100px]"
                 name="content"
                 value={blog.content}
                 onChange={handleChange}
