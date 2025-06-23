@@ -65,7 +65,7 @@ const BlogDetail = () => {
                             alt={blog.title}
                             className="mx-auto sm:w-[30rem] object-cover rounded-2xl mb-8"
                         />
-                        
+
                         {/* Date added above the title with styling */}
                         <p className="text-sm text-gray-400 mb-2">
                             Published on {new Date(blog.createdAt).toLocaleDateString('en-US', {
@@ -82,10 +82,14 @@ const BlogDetail = () => {
                             <div className='flex flex-col sm:flex-row gap-2 items-center justify-center w-full'>
                                 <button
                                     onClick={() => navigate(`/blogs/${blog.category}`)}
-                                    className='bg-green-400 px-4 py-2 rounded hover:bg-green-500 transition-colors'
+                                    className="bg-gradient-to-r from-[#5d2026] via-[#832d35] to-[#5d2026] 
+                                     hover:from-[#832d35] hover:via-[#a83840] hover:to-[#832d35]
+                                        backdrop-blur-xl font-bold text-zinc-200 px-4 py-2 rounded 
+                                        transition-all duration-300"
                                 >
                                     Explore more in {blog.category}
                                 </button>
+
 
                                 {/* Only buttons is shown if owner is logged in */}
                                 {owner && (
