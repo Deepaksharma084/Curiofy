@@ -81,7 +81,7 @@ const BlogDetail = () => {
                         <p className="text-white/80 whitespace-pre-wrap">{blog.content}</p>
 
                         <div className="flex gap-4 mt-8">
-                            <div className='flex flex-col sm:flex-row gap-2 items-center justify-center w-full'>
+                            <div className='flex sm:flex-row gap-2 items-center justify-center w-full'>
 
                                 <button onClick={() => navigate(`/blogs/${blog.category}`)} className={ExploreMoreButtonStyle.button}>
                                     <svg
