@@ -196,3 +196,37 @@
     transform: rotate(390deg);
   }
 }
+
+/* Always apply hover styles on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn .petal {
+    background: linear-gradient(#0761d7, #93bdee);
+    border: 0.5px solid #96b4ec;
+    width: 1.2em;
+    height: 1.2em;
+  }
+  .btn .flower {
+    grid-template-columns: 1.5em 1.5em;
+  }
+  .btn .text {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .btn div.flower1 {
+    animation: 15s linear 0s normal none infinite running flower1;
+  }
+  .btn div.flower2 {
+    animation: 13s linear 1s normal none infinite running flower2;
+  }
+  .btn div.flower3 {
+    animation: 16s linear 1s normal none infinite running flower3;
+  }
+  .btn div.flower4 {
+    animation: 17s linear 1s normal none infinite running flower4;
+  }
+  .btn div.flower5 {
+    animation: 20s linear 1s normal none infinite running flower5;
+  }
+  .btn div.flower6 {
+    animation: 15s linear 1s normal none infinite running flower6;
+  }
+}
