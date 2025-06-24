@@ -1,10 +1,10 @@
 import styles from './WordIndexButton.module.css';
 
-export default function Button({ word }) {
+export default function Button({ word, className = "" }) {
     return (
         <button className={styles.btn}>
             <div className={styles.wrapper}>
-                <p className={styles.text}>{word}</p>
+                <p className={`${styles.text} ${className}`}>{word}</p>
 
                 <div className={styles.flower + ' ' + styles.flower1}>
                     <div className={styles.petal + ' ' + styles.one} />

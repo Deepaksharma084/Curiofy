@@ -27,7 +27,7 @@
   color: #000000;
   padding: 4px 12px;
   border-radius: 4px;
-  background: #eaa086;
+  background: linear-gradient(135deg, #ff8a4b, #b9542f, #aba39f);
   transition: all 0.5s ease;
 }
 
@@ -202,8 +202,8 @@
   .btn .petal {
     background: linear-gradient(#0761d7, #93bdee);
     border: 0.5px solid #96b4ec;
-    width: 1.2em;
-    height: 1.2em;
+    width: 1.4em;
+    height: 1.4em;
   }
   .btn .flower {
     grid-template-columns: 1.5em 1.5em;
