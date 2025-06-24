@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import DeleteBlogButton from './BlogDelete';
 import styles from './BlogPage.module.css';
+import UpdateButtonStyle from './UpdateButton.module.css';
+import ExploreMoreButtonStyle from './ExploreMoreButton.module.css';
 import Loader from './Loader';
 import NotFound from './NotFound';
 
@@ -80,25 +82,30 @@ const BlogDetail = () => {
 
                         <div className="flex gap-4 mt-8">
                             <div className='flex flex-col sm:flex-row gap-2 items-center justify-center w-full'>
-                                <button
-                                    onClick={() => navigate(`/blogs/${blog.category}`)}
-                                    className="bg-gradient-to-r from-[#5d2026] via-[#832d35] to-[#5d2026] 
-                                     hover:from-[#832d35] hover:via-[#a83840] hover:to-[#832d35]
-                                        backdrop-blur-xl font-bold text-zinc-200 px-4 py-2 rounded 
-                                        transition-all duration-300"
-                                >
-                                    Explore more in {blog.category}
-                                </button>
 
+                                <button onClick={() => navigate(`/blogs/${blog.category}`)} className={ExploreMoreButtonStyle.button}>
+                                    <svg
+                                        viewBox="0 0 20 20"
+                                        className={ExploreMoreButtonStyle.svgIcon}
+                                        style={{ height: '1.7rem', width: 'auto' }}
+                                        fill="white"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
 
                                 {/* Only buttons is shown if owner is logged in */}
                                 {owner && (
                                     <>
-                                        <button
-                                            onClick={() => navigate(`/blog/edit/${blog._id}`)}
-                                            className='bg-zinc-500 px-4 py-2 rounded hover:bg-zinc-600 transition-colors text-white'
-                                        >
-                                            Update
+                                        <button onClick={() => navigate(`/blog/edit/${blog._id}`)} class={UpdateButtonStyle.button}>
+                                            <svg viewBox="0 0 24 24" className={UpdateButtonStyle.svgIcon} style={{ height: '1.7rem', width: 'auto' }} fill="none" stroke="currentColor" strokeWidth="1.5">
+                                                <path d="M16.862 4.487a2.1 2.1 0 1 1 2.97 2.97L7.905 19.383a4.5 4.5 0 0 1-1.897 1.13l-2.265.678.678-2.265a4.5 4.5 0 0 1 1.13-1.897L16.862 4.487zM16.862 4.487L19.5 7.125"
+                                                    strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
                                         </button>
 
                                         <DeleteBlogButton blogId={blog._id} />
