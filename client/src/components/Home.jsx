@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './HomePage.module.css';
-import MWGEffect from './AnimationJS';
+import styles from './HomePage.module.css'; 
+import MWGEffect from './Category';
 import img1 from '../assets/medias/mainImage.png';
 import RotatingWords from './RotatingWords';
 

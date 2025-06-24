@@ -65,8 +65,8 @@ const MWGEffect = () => {
 
                 tl.to(image, {
                     inertia: {
-                        x: { velocity: deltaX * 30, end: 0 },
-                        y: { velocity: deltaY * 30, end: 0 }
+                        x: { velocity: deltaX * 8, end: 0 },
+                        y: { velocity: deltaY * 8, end: 0 }
                     },
                 })
 
