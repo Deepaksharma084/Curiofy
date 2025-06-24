@@ -12,7 +12,7 @@ export default function Home() {
                 <div className={styles.overlay}>
                     <div className="container mx-auto px-4 bg-transparent grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:gap-8 xl:max-w-7xl overflow-visible">
 
-                        <div className='child1 flex gap-3 flex-row items-center  h-[calc(100vh-20rem)] bg-transparent' style={{ position: 'relative', zIndex: 1 }}>
+                        <div className='child1 flex gap-3 flex-row items-center  bg-transparent' style={{ position: 'relative', zIndex: 1 }}>
 
                             <div className='subchild1 flex justify-center items-center h-[calc(100vh-8rem)] w-1/6 bg-transparent'>
                                 <div className="text-white whitespace-pre p-3 font-bold tracking-widest rotate-180 [writing-mode:vertical-rl]">
