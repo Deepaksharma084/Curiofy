@@ -56,7 +56,7 @@ const MWGEffect = () => {
         mediaElements.forEach((el) => {
             const mouseenterHandler = () => {
                 const image = el.querySelector('img')
-                const text = el.querySelector('span') // Add this line
+                const text = el.querySelector('span')
                 const tl = gsap.timeline({
                     onComplete: () => tl.kill(),
                 })

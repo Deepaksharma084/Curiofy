@@ -232,7 +232,7 @@ export default function Navbar() {
                                         {showAdminDiv && (
                                             <div
                                                 ref={adminDivMobileRef}
-                                                className="mt-2 backdrop-blur-xl bg-white/20 rounded-md shadow-lg py-1 z-[9999]" // <-- Add z-[9999]
+                                                className="mt-2 backdrop-blur-xl bg-white/20 rounded-md shadow-lg py-1 z-[9999]" 
                                             >
                                                 <AdminDiv />
                                             </div>
