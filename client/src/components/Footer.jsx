@@ -10,10 +10,11 @@ export default function Footer() {
             <div className={`${styles.footerOverlay} w-screen flex flex-col justify-center items-center`}>
                 <div className="parent1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full">
                     <div className="child1 flex flex-col p-8 items-center h-56 ">
-                        <div className="text-zinc-300 text-2xl  font-bold">
+                        <div className="text-zinc-300 text-2xl font-bold">
                             Curiofy
                         </div>
-                        <p className="text-zinc-400 mt-2">Curiofy is a blog where curiosity meets creativity — explore intriguing ideas, unique perspectives, and inspiring stories across tech, life, and beyond</p>
+                        <p className="text-zinc-400 mt-2">Curiofy is a blog where curiosity meets creativity ,explore intriguing ideas, unique perspectives, and inspiring stories across tech, life, culture, innovation, art, and beyond.
+                        </p>
                     </div>
                     <div className="child2 flex flex-col p-8 items-center h-56 ">
                         <h1 className="text-2xl font-bold text-zinc-300">Contact Us</h1>

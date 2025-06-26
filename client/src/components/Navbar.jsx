@@ -167,7 +167,7 @@ export default function Navbar() {
     );
 
     return (
-        <nav className={`z-40 top-5 left-0 right-0 ${styles.authContainer}`}>
+        <nav className={`relative z-[2000] left-0 right-0 ${styles.authContainer}`}>
             <div className={styles.overlay}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
@@ -179,7 +179,7 @@ export default function Navbar() {
                         <div className="hidden md:flex items-center space-x-8 relative">
                             <Link to="/" className="topToBottom text-white hover:text-gray-300 transition-colors">Home</Link>
                             <form onSubmit={handleSearch} className="topToBottom relative w-72">
-                                <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search..." className="w-full px-4 py-1 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent" autoComplete="off" onFocus={() => searchQuery && setShowSearchPopup(true)} />
+                                <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search..." className="w-full px-4 py-1 rounded-full bg-white/15 border border-white/20 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent" autoComplete="off" onFocus={() => searchQuery && setShowSearchPopup(true)} />
                                 {showSearchPopup && searchQuery && renderSearchPopup()}
                             </form>
                             <a href="#contact" onClick={handleContactClick} className="topToBottom text-white hover:text-gray-300 transition-colors cursor-pointer">Contact</a>
@@ -188,7 +188,10 @@ export default function Navbar() {
                                     <SettingsIcon />
                                 </div>
                                 {showAdminDiv && (
-                                    <div ref={adminDivDesktopRef} className="absolute right-0 mt-4 w-48 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1">
+                                    <div
+                                        ref={adminDivDesktopRef}
+                                        className="absolute right-[1] mt-8 w-48 backdrop-blur-xl bg-white/10 rounded-md shadow-lg py-1 z-[9999"
+                                    >
                                         <AdminDiv />
                                     </div>
                                 )}
@@ -227,7 +230,10 @@ export default function Navbar() {
                                             <SettingsIcon />
                                         </button>
                                         {showAdminDiv && (
-                                            <div ref={adminDivMobileRef} className="mt-2 backdrop-blur-xl bg-white/20 rounded-md shadow-lg py-1">
+                                            <div
+                                                ref={adminDivMobileRef}
+                                                className="mt-2 backdrop-blur-xl bg-white/20 rounded-md shadow-lg py-1 z-[9999]" // <-- Add z-[9999]
+                                            >
                                                 <AdminDiv />
                                             </div>
                                         )}

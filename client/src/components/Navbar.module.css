@@ -12,5 +12,5 @@
     right: 0;
     height: 4rem;
     width: 100%;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+    background: linear-gradient(to bottom, transparent, rgb(0, 0, 0));
 }

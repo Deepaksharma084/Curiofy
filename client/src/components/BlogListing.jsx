@@ -60,7 +60,14 @@ const BlogListing = () => {
                         <div className="container max-h-[40rem] rounded-3xl overflow-y-auto">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-min gap-8">
                                 {blogs.map((blog) => (
-                                    <div key={blog._id}
+                                    <div onClick={e => {
+                                        // For left-click, prevent default and use navigate
+                                        if (e.button === 0) {
+                                            e.preventDefault();
+                                            navigate(`/blog/${blog._id}`);
+                                        }
+                                        // For middle-click and right-click, let browser handle
+                                    }} key={blog._id}
                                         className="group relative rounded-2xl bg-[#00000077] p-4 transition-all duration-300 hover:shadow-lg hover:shadow-[#00000077] hover:translate-y-[-4px]"
                                     >
                                         <div className="w-full aspect-video rounded-xl">
@@ -86,14 +93,6 @@ const BlogListing = () => {
                                                 href={`/blog/${blog._id}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                onClick={e => {
-                                                    // For left-click, prevent default and use navigate
-                                                    if (e.button === 0) {
-                                                        e.preventDefault();
-                                                        navigate(`/blog/${blog._id}`);
-                                                    }
-                                                    // For middle-click and right-click, let browser handle
-                                                }}
                                                 className="inline-flex items-center text-sm font-medium text-[#ffc72d] hover:text-[#ffd75e] transition-colors">
                                                 Read more
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

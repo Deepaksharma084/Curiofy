@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import WordIndexButton from "./WordIndexButton";
 
 export default function RotatingWords() {
     const words = ["Explore", "Learn", "Grow"];
@@ -14,11 +13,20 @@ export default function RotatingWords() {
     }, []);
 
     return (
-        <div className="text-zinc-200 flex justify-center items-center text-md p-2 text-center relative">
-            <span className="relative text-[#ff8a4b] inline-flex justify-center w-24 py-1 px-10 rounded-full text-center z-0">
-                <WordIndexButton className="font-bold" word={words[index]} />
+        <div className="flex justify-center items-center text-md p-2">
+            <span className="text-white text-center">
+                <span
+                    className="font-bold w-16 inline-block text-transparent"
+                    style={{
+                        WebkitTextStroke: '0.01rem #ec9068',
+                        color: 'white',
+                        textShadow: '0 0 5px #ec9068, 0 0 10px #ec9068, 0 0 15px #ec9068'
+                    }}
+                >
+                    {words[index]}
+                </span>
+                <span>with us. Dive into a universe of knowledge and creativity.</span>
             </span>
-            <span className="ml-3 z-10">with us. Dive into a universe of knowledge and creativity.</span>
         </div>
     );
 };
