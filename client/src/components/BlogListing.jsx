@@ -4,6 +4,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styles from './BlogPage.module.css';
 import Loader from './Loader';
 
+// ADD THIS FUNCTION: A helper to safely convert HTML to plain text.
+// It uses the browser's own parser, so it's safe and efficient.
+const stripHtml = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+}
+
 const BlogListing = () => {
     const navigate = useNavigate();
     const [blogs, setBlogs] = useState([]);
@@ -86,9 +93,12 @@ const BlogListing = () => {
                                         </p>
                                         <div className="mt-2 space-y-3">
                                             <h2 className="text-xl font-semibold text-white/90">{blog.title}</h2>
+
+                                            {/* MODIFY THIS LINE: Use the stripHtml function before creating the substring. */}
                                             <p className="text-sm text-white/60 line-clamp-3">
-                                                {blog.content.substring(0, 150)}....
+                                                {stripHtml(blog.content).substring(0, 150)}....
                                             </p>
+                                            
                                             <a
                                                 href={`/blog/${blog._id}`}
                                                 target="_blank"

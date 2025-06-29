@@ -1,8 +1,15 @@
+// --- START OF FILE CreateBlogPosts.jsx (Updated) ---
+
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from './BlogPage.module.css';
 import { API_BASE_URL } from '../config';
+
+// Import ReactQuill and its CSS
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // for snow theme
+import './QuillEditor.css'; // We will create this file for custom styles
 
 export default function CreateBlogForm() {
   const { owner } = useAuth(); // Getting owner from context
@@ -10,7 +17,7 @@ export default function CreateBlogForm() {
   const [blog, setBlog] = useState({
     title: "",
     imageUrl: "",
-    content: "",
+    content: "", // This will now store HTML
     category: "",
   });
   const [error, setError] = useState("");
@@ -30,6 +37,15 @@ export default function CreateBlogForm() {
       [name]: value,
     }));
   };
+
+  // Special handler for ReactQuill's content change
+  const handleContentChange = (content) => {
+    setBlog((prevState) => ({
+      ...prevState,
+      content: content,
+    }));
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,12 +96,13 @@ export default function CreateBlogForm() {
 
           <form className="space-y-8" onSubmit={handleSubmit}>
             {error && <div className="text-red-500 mb-4">{error}</div>}
-            {success && ( // Show success message
+            {success && (
               <div className="bg-green-500/20 text-white p-3 rounded-lg mb-4 text-sm">
                 {success}
               </div>
             )}
 
+            {/* Title, ImageURL, and Category inputs remain the same */}
             <div className="space-y-2">
               <label className="text-sm text-white">Title</label>
               <input
@@ -141,19 +158,18 @@ export default function CreateBlogForm() {
               </select>
             </div>
 
+            {/* --- REPLACED TEXTAREA WITH REACT-QUILL --- */}
             <div className="space-y-2">
               <label className="text-sm text-white">Content</label>
-              <textarea
-                className="w-full px-4 py-3 bg-transparent focus:ring-0 border-0 border-b border-white 
-                         text-white placeholder-white/50 focus:border-white focus:outline-none 
-                         focus:ring-white/30 transition-all duration-300 min-h-[100px]"
-                name="content"
+              <ReactQuill
+                theme="snow"
                 value={blog.content}
-                onChange={handleChange}
-                placeholder="Enter content"
-                required
+                onChange={handleContentChange}
+                placeholder="Start writing your amazing blog post..."
+                className="quill-editor-container" // Custom class for styling
               />
             </div>
+            {/* --- END OF REPLACEMENT --- */}
 
             <button
               className="mt-5 w-full py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 

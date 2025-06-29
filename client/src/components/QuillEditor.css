@@ -1,0 +1,41 @@
+/* src/components/QuillEditor.css */
+
+/* Target the container to set a border radius and overflow */
+.quill-editor-container .ql-toolbar {
+  background: #ffffff1a; /* semi-transparent white */
+  border: 1px solid #ffffff33; /* light border */
+  border-bottom: none;
+  border-top-left-radius: 0.75rem; /* 12px */
+  border-top-right-radius: 0.75rem;
+}
+
+.quill-editor-container .ql-container {
+  background: transparent;
+  border: 1px solid #ffffff33;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  color: white;
+  min-height: 200px;
+  font-size: 1rem;
+}
+
+/* Change toolbar icon colors */
+.quill-editor-container .ql-snow .ql-stroke {
+  stroke: white;
+}
+.quill-editor-container .ql-snow .ql-fill {
+  fill: white;
+}
+.quill-editor-container .ql-snow .ql-picker-label {
+  color: white;
+}
+.quill-editor-container .ql-snow .ql-picker-options {
+  background-color: #333; /* Dark background for dropdowns */
+  border-color: #ffffff33;
+}
+
+/* Style the placeholder text */
+.quill-editor-container .ql-editor.ql-blank::before {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: normal;
+}
