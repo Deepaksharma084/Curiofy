@@ -1,5 +1,3 @@
-// --- START OF FILE BlogDetail.jsx (Updated) ---
-
 import React, { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../config';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -10,45 +8,37 @@ import UpdateButtonStyle from './UpdateButton.module.css';
 import ExploreMoreButtonStyle from './ExploreMoreButton.module.css';
 import Loader from './Loader';
 import NotFound from './NotFound';
-import DOMPurify from 'dompurify'; // Import DOMPurify
-import './BlogContent.css'; // We will create this file for content styling
+// Imported for security
+import DOMPurify from 'dompurify';
+import './BlogContent.css'; 
 
 const BlogDetail = () => {
-    // ... (useState, useParams, useNavigate, useAuth hooks remain the same)
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
     const navigate = useNavigate();
     const { owner } = useAuth();
 
-
     useEffect(() => {
-        // ... (fetchBlog logic remains the same)
         const fetchBlog = async () => {
             try {
-                const res = await fetch(`${API_BASE_URL}/blogs/${id}`, {
-                    credentials: 'include'
-                });
-
+                const res = await fetch(`${API_BASE_URL}/blogs/${id}`, { credentials: 'include' });
                 if (!res.ok) {
                     throw new Error('Failed to fetch blog');
                 }
-
                 const data = await res.json();
                 setBlog(data);
-                setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
+            } finally {
                 setLoading(false);
             }
         };
-
         fetchBlog();
         window.scrollTo(0, 0);
     }, [id]);
 
-    // ... (loading and not found logic remains the same)
-    if (loading)
+    if (loading) {
         return (
             <div className={`flex justify-center items-center ${styles.blogContainer} w-full h-screen`}>
                 <div className={styles.overlay}>
@@ -56,12 +46,17 @@ const BlogDetail = () => {
                 </div>
             </div>
         );
+    }
 
-    if (!blog) return <div className={`flex justify-center items-center ${styles.blogContainer} w-full h-screen`}>
-        <div className={styles.overlay}>
-            <NotFound />
-        </div>
-    </div>;
+    if (!blog) {
+        return (
+            <div className={`flex justify-center items-center ${styles.blogContainer} w-full h-screen`}>
+                <div className={styles.overlay}>
+                    <NotFound />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.blogContainerBlackBg}>
@@ -73,56 +68,52 @@ const BlogDetail = () => {
                             alt={blog.title}
                             className="mx-auto sm:w-[30rem] object-cover rounded-2xl mb-8"
                         />
-
                         <p className="text-sm text-gray-400 mb-2">
-                            {/* ... (date formatting remains the same) */}
+                            Published on {new Date(blog.createdAt).toLocaleDateString('en-US', {
+                                year: 'numeric', month: 'long', day: 'numeric',
+                            })}
                         </p>
-
                         <h1 className="text-3xl font-bold text-white mb-4">{blog.title}</h1>
 
-                        {/* --- RENDER THE HTML CONTENT SAFELY --- */}
+                        {/* This renders the HTML from the database */}
                         <div
                             className="text-white/80 blog-content"
                             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
                         />
-                        {/* --- END OF CHANGE --- */}
 
                         <div className="flex gap-4 mt-8">
-                            {/* ... (buttons remain the same) */}
-                        </div>
-                        <div className='flex sm:flex-row gap-2 items-center justify-center w-full'>
-                            <button onClick={() => navigate(`/blogs/${blog.category}`)} className={ExploreMoreButtonStyle.button}>
-                                <svg
-                                    viewBox="0 0 20 20"
-                                    className={ExploreMoreButtonStyle.svgIcon}
-                                    style={{ height: '1.7rem', width: 'auto' }}
-                                    fill="white"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </button>
-
-                            {owner && (
-                                <>
-                                    <button onClick={() => navigate(`/blog/edit/${blog._id}`)} class={UpdateButtonStyle.button}>
-                                        <svg viewBox="0 0 24 24" className={UpdateButtonStyle.svgIcon} style={{ height: '1.7rem', width: 'auto' }} fill="none" stroke="currentColor" strokeWidth="1.5">
-                                            <path d="M16.862 4.487a2.1 2.1 0 1 1 2.97 2.97L7.905 19.383a4.5 4.5 0 0 1-1.897 1.13l-2.265.678.678-2.265a4.5 4.5 0 0 1 1.13-1.897L16.862 4.487zM16.862 4.487L19.5 7.125"
-                                                strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                    </button>
-
-                                    <DeleteBlogButton blogId={blog._id} />
-                                </>
-                            )}
+                            <div className='flex sm:flex-row gap-2 items-center justify-center w-full'>
+                                <button onClick={() => navigate(`/blogs/${blog.category}`)} className={ExploreMoreButtonStyle.button}>
+                                    <svg
+                                        viewBox="0 0 20 20"
+                                        className={ExploreMoreButtonStyle.svgIcon}
+                                        style={{ height: '1.7rem', width: 'auto' }}
+                                        fill="white"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+                                {owner && (
+                                    <>
+                                        <button onClick={() => navigate(`/blog/edit/${blog._id}`)} className={UpdateButtonStyle.button}>
+                                            <svg viewBox="0 0 24 24" className={UpdateButtonStyle.svgIcon} style={{ height: '1.7rem', width: 'auto' }} fill="none" stroke="currentColor" strokeWidth="1.5">
+                                                <path d="M16.862 4.487a2.1 2.1 0 1 1 2.97 2.97L7.905 19.383a4.5 4.5 0 0 1-1.897 1.13l-2.265.678.678-2.265a4.5 4.5 0 0 1 1.13-1.897L16.862 4.487zM16.862 4.487L19.5 7.125"
+                                                    strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <DeleteBlogButton blogId={blog._id} />
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

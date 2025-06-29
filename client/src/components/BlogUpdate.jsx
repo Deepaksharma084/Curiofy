@@ -1,13 +1,10 @@
-// --- START OF FILE BlogUpdate.jsx (Corrected) ---
-
 import { API_BASE_URL } from '../config';
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from './BlogPage.module.css';
 import Loader from './Loader';
-
-// --- ADD THIS ---: Imports for the Rich Text Editor
+//Imports for the Rich Text Editor
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './QuillEditor.css';
@@ -32,7 +29,7 @@ export default function BlogUpdate() {
         const response = await fetch(`${API_BASE_URL}/blogs/${id}`);
         const data = await response.json();
         if (response.ok) {
-          setBlog(data); // Set the entire blog object
+          setBlog(data); // Seting the entire blog object
         } else {
           setError(data.message || "Failed to fetch blog");
         }
@@ -54,7 +51,7 @@ export default function BlogUpdate() {
     setBlog(prevState => ({ ...prevState, [name]: value }));
   };
 
-  // --- ADD THIS ---: Special handler for the Rich Text Editor's content
+  //Special handler for the Rich Text Editor's content
   const handleContentChange = (content) => {
     setBlog(prevState => ({ ...prevState, content: content }));
   };
@@ -131,7 +128,7 @@ export default function BlogUpdate() {
               </select>
             </div>
 
-            {/* --- REPLACE THE TEXTAREA WITH THIS --- */}
+            {/*REPLACED THE TEXTAREA WITH THIS*/}
             <div className="space-y-2">
               <label className="text-sm text-white">Content</label>
               <ReactQuill

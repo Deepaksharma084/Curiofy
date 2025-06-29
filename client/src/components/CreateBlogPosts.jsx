@@ -1,15 +1,12 @@
-// --- START OF FILE CreateBlogPosts.jsx (Updated) ---
-
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from './BlogPage.module.css';
 import { API_BASE_URL } from '../config';
-
-// Import ReactQuill and its CSS
+// Importing ReactQuill and its CSS
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // for snow theme
-import './QuillEditor.css'; // We will create this file for custom styles
+import './QuillEditor.css';
 
 export default function CreateBlogForm() {
   const { owner } = useAuth(); // Getting owner from context
@@ -17,7 +14,7 @@ export default function CreateBlogForm() {
   const [blog, setBlog] = useState({
     title: "",
     imageUrl: "",
-    content: "", // This will now store HTML
+    content: "", // This will store HTML
     category: "",
   });
   const [error, setError] = useState("");
@@ -102,7 +99,6 @@ export default function CreateBlogForm() {
               </div>
             )}
 
-            {/* Title, ImageURL, and Category inputs remain the same */}
             <div className="space-y-2">
               <label className="text-sm text-white">Title</label>
               <input
@@ -169,7 +165,6 @@ export default function CreateBlogForm() {
                 className="quill-editor-container" // Custom class for styling
               />
             </div>
-            {/* --- END OF REPLACEMENT --- */}
 
             <button
               className="mt-5 w-full py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 
