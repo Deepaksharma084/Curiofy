@@ -33,7 +33,7 @@ export default function Home() {
                         </div>
 
                         <div className='child2'>
-                            <div className='subchild3 flex flex-col items-center w-full bg-transparent'>
+                            <div className='subchild3 flex flex-col items-center w-full bg-transparent md:mt-10 mb-8'>
                                 <div className='flex flex-col justify-center items-center bg-transparent mb-2'>
                                     <h1 className='text-white whitespace-pre p-2 font-bold text-base md:text-2xl'>WELCOME TO THE WORLD OF CURIOSITY</h1>
                                     <p className='text-zinc-400 text-md p-2'>

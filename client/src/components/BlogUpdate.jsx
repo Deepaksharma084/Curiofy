@@ -2,7 +2,7 @@ import { API_BASE_URL } from '../config';
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from './BlogPage.module.css';
+import styles from './BlogDetail.module.css';
 import Loader from './Loader';
 //Imports for the Rich Text Editor
 import ReactQuill from 'react-quill';

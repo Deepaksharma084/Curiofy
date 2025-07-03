@@ -3,14 +3,14 @@ import { API_BASE_URL } from '../config';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import DeleteBlogButton from './BlogDelete';
-import styles from './BlogPage.module.css';
+import styles from './BlogDetail.module.css';
 import UpdateButtonStyle from './UpdateButton.module.css';
 import ExploreMoreButtonStyle from './ExploreMoreButton.module.css';
 import Loader from './Loader';
 import NotFound from './NotFound';
 // Imported for security
 import DOMPurify from 'dompurify';
-import './BlogContent.css'; 
+import './BlogContent.css';
 
 const BlogDetail = () => {
     const [blog, setBlog] = useState(null);
@@ -61,12 +61,14 @@ const BlogDetail = () => {
     return (
         <div className={styles.blogContainerBlackBg}>
             <div className={styles.overlay}>
-                <div className="px-2 sm:px-10 py-10">
-                    <div className="mx-auto sm:w-screen bg-white/10 rounded-3xl md:p-16 p-3 py-8 shadow-2xl">
+                <div className="px-[0.01rem] py-5">
+                    <div
+                        className="mx-auto sm:w-screen backdrop-blur-lg rounded-3xl md:p-16 p-3 py-8 shadow-2xl "
+                    >
                         <img
                             src={blog.imageUrl}
                             alt={blog.title}
-                            className="mx-auto sm:w-[30rem] object-cover rounded-2xl mb-8"
+                            className="mx-auto md:w-[50rem] h-auto rounded-2xl mb-8"
                         />
                         <p className="text-sm text-gray-400 mb-2">
                             Published on {new Date(blog.createdAt).toLocaleDateString('en-US', {
@@ -77,7 +79,7 @@ const BlogDetail = () => {
 
                         {/* This renders the HTML from the database */}
                         <div
-                            className="text-white/80 blog-content"
+                            className="text-white/80 break-words"
                             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
                         />
 

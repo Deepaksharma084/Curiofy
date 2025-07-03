@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import styles from './BlogPage.module.css';
+import styles from './BlogDetail.module.css';
 import { API_BASE_URL } from '../config';
 // Importing ReactQuill and its CSS
 import ReactQuill from 'react-quill';
