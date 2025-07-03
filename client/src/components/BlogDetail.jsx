@@ -79,7 +79,7 @@ const BlogDetail = () => {
 
                         {/* This renders the HTML from the database */}
                         <div
-                            className="text-white/80 break-words"
+                            className="blog-content text-white/80 break-words"
                             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
                         />
 
