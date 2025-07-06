@@ -23,8 +23,9 @@ const BlogListing = () => {
         const fetchBlogs = async () => {
             try {
                 setLoading(true);
+                const cacheBuster = `_=${new Date().getTime()}`;
                 const res = await fetch(
-                    `${API_BASE_URL}/blogs/category/${category}?page=${currentPage}&limit=9`
+                    `${API_BASE_URL}/blogs/category/${category}?page=${currentPage}&limit=9&${cacheBuster}`
                 );
                 if (!res.ok) throw new Error('Failed to fetch blogs');
                 const data = await res.json();
