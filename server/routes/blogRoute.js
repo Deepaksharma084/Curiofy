@@ -22,6 +22,9 @@ router.post("/create", isOwnerLogdin, async (req, res) => {
 });
 
 router.get("/category/:category", async (req, res) => {
+  console.log('--- NEW REQUEST RECEIVED ---');
+  console.log(`Timestamp (UTC): ${new Date().toISOString()}`);
+  console.log(`Category: ${req.params.category}, Page: ${req.query.page || 1}`);
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 9;
@@ -31,7 +34,8 @@ router.get("/category/:category", async (req, res) => {
     const blogs = await Blog.find({ category: req.params.category })
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .read('primary');
 
     res.status(200).json({
       blogs,
