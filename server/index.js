@@ -8,8 +8,10 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB Connected"))
+mongoose.connect(process.env.MONGO_URI, {
+    readPreference: 'primary'
+})
+    .then(() => console.log("MongoDB Connected with read preference set to primary"))
     .catch(err => console.error(err));
 
 const cors = require('cors');
