@@ -44,6 +44,14 @@ function App() {
             <Route path="/blogs/:category" element={<BlogListing />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/blog/edit/:id" element={<BlogUpdate />} />
+            <Route
+              path="/search"
+              element={
+                <div className="flex justify-center items-center md:min-h-screen">
+                  <NotFound />
+                </div>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
