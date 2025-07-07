@@ -10,7 +10,7 @@ import Home from './components/Home';
 import Footer from './components/Footer';
 import BlogDetail from './components/BlogDetail';
 import BlogUpdate from './components/BlogUpdate';
-import SearchRecomendationPage from "./components/SearchRecomendationPage";
+import SearchRecommendationPage from "./components/SearchRecommendationPage";
 import NotFound from './components/NotFound';
 import './App.css'
 
@@ -47,7 +47,7 @@ function App() {
             <Route path="/blog/edit/:id" element={<BlogUpdate />} />
             <Route
               path="/search"
-              element={<SearchRecomendationPage />}
+              element={<SearchRecommendationPage />}
             />
             <Route path="*" element={<NotFound />} />
           </Routes>
