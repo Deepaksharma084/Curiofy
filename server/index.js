@@ -8,11 +8,14 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB Connected Successfully using modern driver!"))
-    .catch(err => {
-        console.error("MongoDB Connection Failed:", err);
-    });
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.error('MongoDB connection error:', err);
+});
 
 const cors = require('cors');
 app.use(cors({
@@ -23,7 +26,7 @@ app.use(cors({
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control']
 }));
 
 app.use(cookieParser());
@@ -33,11 +36,11 @@ app.use(express.urlencoded({ extended: true }));
 
 //Soooo this is the main cache control. It must be placed BEFORE the API routes
 const setNoCacheHeaders = (req, res, next) => {
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.setHeader('Pragma', 'no-cache'); // for HTTP 1.0 proxies
-  res.setHeader('Expires', '0'); // for older clients
-  res.setHeader('Surrogate-Control', 'no-store'); // for CDNs
-  next();
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache'); // for HTTP 1.0 proxies
+    res.setHeader('Expires', '0'); // for older clients
+    res.setHeader('Surrogate-Control', 'no-store'); // for CDNs
+    next();
 };
 
 app.use('/blogs', setNoCacheHeaders);

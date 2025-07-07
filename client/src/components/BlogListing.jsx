@@ -25,7 +25,14 @@ const BlogListing = () => {
                 setLoading(true);
                 const cacheBuster = `_=${new Date().getTime()}`;
                 const res = await fetch(
-                    `${API_BASE_URL}/blogs/category/${category}?page=${currentPage}&limit=9&${cacheBuster}`
+                    `${API_BASE_URL}/blogs/category/${category}?page=${currentPage}&limit=9&${cacheBuster}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                        },
+                        credentials: 'include', // if you need cookies
+                    }
                 );
                 if (!res.ok) throw new Error('Failed to fetch blogs');
                 const data = await res.json();
