@@ -133,7 +133,8 @@ export default function Navbar() {
             ref={popupRef}
             className="absolute -right-20 mt-2 sm:w-[25rem] w-[20rem] h-[14rem] overflow-scroll max-w-lg bg-white/10 rounded-xl shadow-xl border border-white/20 backdrop-blur-xl"
             style={{ top: '110%' }}
-            onMouseDown={e => e.preventDefault()}
+            onMouseDown={e => e.stopPropagation()}//actually this is built in function which prevents the click event to propagate from child to parent element
+            onTouchStart={e => e.stopPropagation()} // Prevents touch events from propagating
         >
             {isSearching && <p className="text-white p-4">Searching...</p>}
             {!isSearching && searchResults.length > 0 ? (
@@ -142,6 +143,7 @@ export default function Navbar() {
                         key={blog._id}
                         to={`/blog/${blog._id}`}
                         className="flex items-center gap-3 p-3 hover:bg-white/20"
+                        onClick={() => setShowSearchPopup(false)}
                     >
                         {/* Blog Image */}
                         {blog.imageUrl && (
