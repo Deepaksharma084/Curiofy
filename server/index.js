@@ -8,10 +8,9 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI, {
-    readPreference: 'primary'
-})
-    .then(() => console.log("MongoDB Connected with read preference set to primary"))
+// --- CHANGE 1: Reverted the mongoose connection to its standard form ---
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB Connected")) // Log message is now standard
     .catch(err => console.error(err));
 
 const cors = require('cors');
@@ -30,12 +29,23 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// API routes should be first
+
+//Soooo this is the main cache control. It must be placed BEFORE the API routes
+app.use('/blogs', (req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+});
+app.use('/owner', (req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+});
+
+// API routes are defined after the middleware i.e cache control
 app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
 
-// Static files and SPA fallback should be after API routes
+//Aurrr-- Static files and SPA fallback should be after API routes
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
