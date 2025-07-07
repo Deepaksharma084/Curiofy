@@ -8,37 +8,11 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const app = express();
 
-// --- I Implemented --- NEW AND IMPROVED MONGOOSE CONNECTION LOGIC ---
-
-// Defined connection options to make it more robust for cloud/serverless environments
-const mongooseOptions = {
-    serverSelectionTimeoutMS: 60000, // Increase timeout to 60s
-    socketTimeoutMS: 45000, // Increase socket timeout to 45s
-    keepAlive: true, // This is crucial to prevent idle timeouts
-    keepAliveInitialDelay: 300000, // Send first keep-alive probe after 5 mins
-    useNewUrlParser: true, // Although deprecated, it's good practice to keep
-    useUnifiedTopology: true // Modern topology engine
-};
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, mongooseOptions)
-    .then(() => console.log("MongoDB Connected Successfully"))
-    .catch(err => console.error("MongoDB Connection Error:", err));
-
-// Added connection event listeners for better debugging
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.on('disconnected', () => {
-    console.log('MongoDB disconnected. Attempting to reconnect...');
-});
-db.on('reconnected', () => {
-    console.log('MongoDB reconnected!');
-});
-db.on('close', () => {
-    console.log('MongoDB connection closed.');
-});
-
-// --- END: OF NEW LOGIC ---
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB Connected Successfully using modern driver!"))
+    .catch(err => {
+        console.error("MongoDB Connection Failed:", err);
+    });
 
 const cors = require('cors');
 app.use(cors({
