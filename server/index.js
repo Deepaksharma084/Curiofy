@@ -31,14 +31,16 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //Soooo this is the main cache control. It must be placed BEFORE the API routes
-app.use('/blogs', (req, res, next) => {
-    res.setHeader('Cache-Control', 'no-store');
-    next();
-});
-app.use('/owner', (req, res, next) => {
-    res.setHeader('Cache-Control', 'no-store');
-    next();
-});
+const setNoCacheHeaders = (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache'); // for HTTP 1.0 proxies
+  res.setHeader('Expires', '0'); // for older clients
+  res.setHeader('Surrogate-Control', 'no-store'); // for CDNs
+  next();
+};
+
+app.use('/blogs', setNoCacheHeaders);
+app.use('/owner', setNoCacheHeaders);
 
 // API routes are defined after the middleware i.e cache control
 app.use("/", indexRouter);
