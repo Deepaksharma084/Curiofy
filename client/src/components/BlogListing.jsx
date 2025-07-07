@@ -23,17 +23,24 @@ const BlogListing = () => {
         const fetchBlogs = async () => {
             try {
                 setLoading(true);
-                const cacheBuster = `_=${new Date().getTime()}`;
-                const res = await fetch(
-                    `${API_BASE_URL}/blogs/category/${category}?page=${currentPage}&limit=9&${cacheBuster}`,
-                    {
-                        method: 'GET',
-                        headers: {
-                            'Cache-Control': 'no-cache',
-                        },
-                        credentials: 'include', // if you need cookies
-                    }
-                );
+                 // This is the most powerful technique to defeat network/CDN caches.
+                const randomCacheBuster = `cb=${Math.random()}`;
+                const url = `${API_BASE_URL}/blogs/category/${category}?page=${currentPage}&limit=9&${randomCacheBuster}`;
+
+                // this is the most aggressive cache-control options available in the fetch API.
+                const res = await fetch(url, {
+                    method: 'GET',
+                    // 'no-store' is the strongest directive. It tells the browser
+                    // to not store this response in its cache AT ALL.
+                    cache: 'no-store',
+                    headers: {
+                        // These headers are for any intermediate proxies/CDNs.
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache', // For older HTTP/1.0 proxies
+                        'Expires': '0', // For very old clients
+                    },
+                    credentials: 'include',
+                });
                 if (!res.ok) throw new Error('Failed to fetch blogs');
                 const data = await res.json();
                 setBlogs(data.blogs);
