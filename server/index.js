@@ -36,10 +36,19 @@ app.use(express.urlencoded({ extended: true }));
 
 //Soooo this is the main cache control. It must be placed BEFORE the API routes
 const setNoCacheHeaders = (req, res, next) => {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma', 'no-cache'); // for HTTP 1.0 proxies
-    res.setHeader('Expires', '0'); // for older clients
-    res.setHeader('Surrogate-Control', 'no-store'); // for CDNs
+    // This is the most important header. 'private' tells CDNs not to cache.
+    // 'no-store' is for browsers. 'max-age=0' ensures re-validation.
+    res.setHeader('Cache-Control', 'private, no-store, no-cache, must-revalidate, max-age=0');
+    
+    // This is a specific header for Cloudflare (which Render uses) to not cache.
+    res.setHeader('CDN-Cache-Control', 'no-cache');
+
+    // For older HTTP/1.0 proxies
+    res.setHeader('Pragma', 'no-cache');
+    
+    // For older clients
+    res.setHeader('Expires', '0');
+    
     next();
 };
 
