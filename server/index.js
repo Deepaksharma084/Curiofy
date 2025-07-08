@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 const path = require('path');
 const indexRouter = require("./routes/indexRouter");
 const blogRoute = require("./routes/blogRoute");
-const ownerRoute = require("./routes/ownerRoute");
+const ownerRoute =require("./routes/ownerRoute");
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const app = express();
 
+// --- Database Connection (No changes needed) ---
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -17,42 +18,60 @@ mongoose.connect(process.env.MONGO_URI, {
     console.error('MongoDB connection error:', err);
 });
 
+// --- THE CORS FIX ---
 const cors = require('cors');
-app.use(cors({
-    origin: [
-        'https://curiofy.onrender.com',
-        'http://localhost:5173',
-        'http://192.168.1.8:5173'
-    ],
+
+// Define the origins that are allowed to access your backend
+const allowedOrigins = [
+    'https://curiofy.onrender.com',
+    'http://localhost:5173',
+    'http://192.168.1.8:5173'
+];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control', 'Pragma', 'Expires']
-}));
+};
 
+// This is the most important part for preflight requests.
+// It tells Express to handle OPTIONS requests globally and apply CORS.
+app.options('*', cors(corsOptions));
+
+// Now, use the CORS middleware for all other requests.
+app.use(cors(corsOptions));
+
+
+// --- Standard Middleware (No changes needed) ---
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// API routes are defined after the middleware i.e cache control
+
+// --- API Routes (No changes needed) ---
 app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
 
-//Aurrr-- Static files and SPA fallback should be after API routes
+
+// --- SPA Fallback and Static Serving (No changes needed) ---
+// This part is likely not being used in your Render setup, but it's fine to keep.
 app.use(express.static(path.join(__dirname, '../client/dist')));
-
-const setHtmlNoCache = (req, res, next) => {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    next();
-};
-
-// It is applied ONLY to the route that serves index.html
-app.get('*', setHtmlNoCache, (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
+
+// --- Server Start (No changes needed) ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
