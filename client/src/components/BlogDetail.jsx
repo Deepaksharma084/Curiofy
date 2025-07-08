@@ -63,7 +63,7 @@ const BlogDetail = () => {
             <div className={styles.overlay}>
                 <div className="px-[0.01rem] py-5">
                     <div
-                        className="mx-auto sm:w-screen backdrop-blur-lg rounded-3xl md:p-16 p-3 py-8 shadow-2xl "
+                        className="mx-auto sm:w-screen rounded-3xl md:p-16 p-3 py-8 shadow-2xl "
                     >
                         <img
                             src={blog.imageUrl}

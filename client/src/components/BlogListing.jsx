@@ -88,7 +88,7 @@ const BlogListing = () => {
                                 }
                                 // For middle-click and right-click, let browser handle
                             }} key={blog._id}
-                                className="group relative rounded-2xl bg-[#000000] backdrop-blur-2xl p-4 transition-all duration-300 hover:shadow-lg hover:shadow-[#00000077] hover:translate-y-[-4px]"
+                                className="group relative rounded-2xl bg-[#000000] p-4 transition-all duration-300 hover:shadow-lg hover:shadow-[#00000077] hover:translate-y-[-4px]"
                             >
                                 <div className="w-full aspect-video rounded-xl">
                                     <img
