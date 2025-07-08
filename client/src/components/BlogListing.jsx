@@ -23,9 +23,9 @@ const BlogListing = () => {
         const fetchBlogs = async () => {
             try {
                 setLoading(true);
-                 // This is the most powerful technique to defeat network/CDN caches.
-                const randomCacheBuster = `cb=${Math.random()}`;
-                const url = `${API_BASE_URL}/blogs/category/${category}?page=${currentPage}&limit=9&${randomCacheBuster}`;
+                // This is the most powerful technique to defeat network/CDN caches.
+                const cacheBuster = Date.now();
+                const url = `${API_BASE_URL}/blogs/category/${category}/${cacheBuster}?page=${currentPage}&limit=9`;
 
                 // this is the most aggressive cache-control options available in the fetch API.
                 const res = await fetch(url, {

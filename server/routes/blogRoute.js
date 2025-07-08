@@ -21,7 +21,7 @@ router.post("/create", isOwnerLogdin, async (req, res) => {
   }
 });
 
-router.get("/category/:category", async (req, res) => {
+router.get("/category/:category/:cacheBuster?", async (req, res) => {
   console.log('--- NEW REQUEST RECEIVED ---');
   console.log(`Timestamp (UTC): ${new Date().toISOString()}`);
   console.log(`Category: ${req.params.category}, Page: ${req.query.page || 1}`);

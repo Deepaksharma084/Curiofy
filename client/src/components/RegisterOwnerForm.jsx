@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from './AuthPage.module.css';
+import { API_BASE_URL } from "../config";
 
 const RegisterOwner = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -19,14 +20,14 @@ const RegisterOwner = () => {
         }
 
         try {
-            const res = await fetch("http://localhost:3000/owner/register", {
+            const res = await fetch(`${API_BASE_URL}/owner/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
             });
 
             const data = await res.json();
-            
+
             if (res.ok) {
                 alert(data.message || "Owner registered successfully!");
             } else {
