@@ -33,28 +33,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-//Soooo this is the main cache control. It must be placed BEFORE the API routes
-const setNoCacheHeaders = (req, res, next) => {
-    // This is the most important header. 'private' tells CDNs not to cache.
-    // 'no-store' is for browsers. 'max-age=0' ensures re-validation.
-    res.setHeader('Cache-Control', 'private, no-store, no-cache, must-revalidate, max-age=0');
-    
-    // This is a specific header for Cloudflare (which Render uses) to not cache.
-    res.setHeader('CDN-Cache-Control', 'no-cache');
-
-    // For older HTTP/1.0 proxies
-    res.setHeader('Pragma', 'no-cache');
-    
-    // For older clients
-    res.setHeader('Expires', '0');
-    
-    next();
-};
-
-app.use('/blogs', setNoCacheHeaders);
-app.use('/owner', setNoCacheHeaders);
-
 // API routes are defined after the middleware i.e cache control
 app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
@@ -62,7 +40,16 @@ app.use("/owner", ownerRoute);
 
 //Aurrr-- Static files and SPA fallback should be after API routes
 app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
+
+const setHtmlNoCache = (req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+};
+
+// It is applied ONLY to the route that serves index.html
+app.get('*', setHtmlNoCache, (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
