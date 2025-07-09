@@ -18,8 +18,6 @@ const BlogListing = () => {
     const [totalPages, setTotalPages] = useState(0);
     const { category } = useParams();
 
-    // wrap fetchBlogs in useCallback so it doesn't get recreated on every render.
-    // This makes it safe to use in multiple useEffect hooks.
     const fetchBlogs = useCallback(async () => {
         setLoading(true);
         try {
@@ -36,30 +34,20 @@ const BlogListing = () => {
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error('Error:', error);
-            // Don't show old data if the fetch fails
             setBlogs([]);
             setTotalPages(0);
         } finally {
             setLoading(false);
         }
-    }, [category, currentPage]); // Dependencies for the fetch function
+    }, [category, currentPage]);
 
-    // This hook runs when the component mounts or when the dependencies change.
+    // This is the only data-fetching hook we need.
+    // It runs when the page loads, when the page number changes,
+    // or when the user navigates to this page (thanks to location.key).
     useEffect(() => {
         fetchBlogs();
         window.scrollTo(0, 0);
-    }, [fetchBlogs, location.key]); // location.key ensures refetch on navigation
-
-    // This new hook handles refetching when the window gets focus.
-    useEffect(() => {
-        // Adds event listener when the component mounts
-        window.addEventListener('focus', fetchBlogs);
-
-        // Remove event listener when the component unmounts to prevent memory leaks
-        return () => {
-            window.removeEventListener('focus', fetchBlogs);
-        };
-    }, [fetchBlogs]); // The dependency is the memoized fetchBlogs function
+    }, [fetchBlogs, location.key]); // location.key is the crucial part for navigation
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
