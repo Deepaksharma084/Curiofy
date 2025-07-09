@@ -12,11 +12,6 @@ services:
     envVars:
       - key: MONGO_URI
         fromSecret: true
-
-    headers:
-      - path: /index.html
-        name: Cache-Control
-        value: no-cache, must-revalidate, max-age=0
         
     routes:
       - type: rewrite
