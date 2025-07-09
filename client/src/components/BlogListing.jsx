@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { API_BASE_URL } from '../config';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import styles from './BlogListing.module.css';
 import Loader from './Loader';
 
-//A helper to safely convert HTML to plain text.
-// It uses the browser's own parser, so it's safe and efficient.
 const stripHtml = (html) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.textContent || "";
@@ -13,52 +11,58 @@ const stripHtml = (html) => {
 
 const BlogListing = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const { category } = useParams();
 
+    // wrap fetchBlogs in useCallback so it doesn't get recreated on every render.
+    // This makes it safe to use in multiple useEffect hooks.
+    const fetchBlogs = useCallback(async () => {
+        setLoading(true);
+        try {
+            const cacheBuster = Date.now();
+            const url = `${API_BASE_URL}/blogs/category/${category}/${cacheBuster}?page=${currentPage}&limit=9`;
+
+            const res = await fetch(url, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            if (!res.ok) throw new Error('Failed to fetch blogs');
+            const data = await res.json();
+            setBlogs(data.blogs);
+            setTotalPages(data.totalPages);
+        } catch (error) {
+            console.error('Error:', error);
+            // Don't show old data if the fetch fails
+            setBlogs([]);
+            setTotalPages(0);
+        } finally {
+            setLoading(false);
+        }
+    }, [category, currentPage]); // Dependencies for the fetch function
+
+    // This hook runs when the component mounts or when the dependencies change.
     useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                setLoading(true);
-                // This is the most powerful technique to defeat network/CDN caches.
-                const cacheBuster = Date.now();
-                const url = `${API_BASE_URL}/blogs/category/${category}/${cacheBuster}?page=${currentPage}&limit=9`;
-
-                // this is the most aggressive cache-control options available in the fetch API.
-                const res = await fetch(url, {
-                    method: 'GET',
-                    // 'no-store' is the strongest directive. It tells the browser
-                    // to not store this response in its cache AT ALL.
-                    cache: 'no-store',
-                    headers: {
-                        // These headers are for any intermediate proxies/CDNs.
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache', // For older HTTP/1.0 proxies
-                        'Expires': '0', // For very old clients
-                    },
-                    credentials: 'include',
-                });
-                if (!res.ok) throw new Error('Failed to fetch blogs');
-                const data = await res.json();
-                setBlogs(data.blogs);
-                setTotalPages(data.totalPages);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error:', error);
-                setLoading(false);
-            }
-        };
-
         fetchBlogs();
         window.scrollTo(0, 0);
-    }, [category, currentPage]);
+    }, [fetchBlogs, location.key]); // location.key ensures refetch on navigation
+
+    // This new hook handles refetching when the window gets focus.
+    useEffect(() => {
+        // Adds event listener when the component mounts
+        window.addEventListener('focus', fetchBlogs);
+
+        // Remove event listener when the component unmounts to prevent memory leaks
+        return () => {
+            window.removeEventListener('focus', fetchBlogs);
+        };
+    }, [fetchBlogs]); // The dependency is the memoized fetchBlogs function
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-        window.scrollTo(0, 0);
     };
 
     if (loading) {
@@ -81,14 +85,12 @@ const BlogListing = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-min bg-transparent rounded-md gap-8">
                         {blogs.map((blog) => (
                             <div onClick={e => {
-                                // For left-click, prevent default and use navigate
                                 if (e.button === 0) {
                                     e.preventDefault();
                                     navigate(`/blog/${blog._id}`);
                                 }
-                                // For middle-click and right-click, let browser handle
                             }} key={blog._id}
-                                className="group relative rounded-2xl bg-[#000000] p-4 transition-all duration-300 hover:shadow-lg hover:shadow-[#00000077] hover:translate-y-[-4px]"
+                                className="group relative rounded-2xl bg-[#000000] p-4 transition-all duration-300 hover:translate-y-[-4px]"
                             >
                                 <div className="w-full aspect-video rounded-xl">
                                     <img
@@ -106,12 +108,9 @@ const BlogListing = () => {
                                 </p>
                                 <div className="mt-2 space-y-3">
                                     <h2 className="text-xl font-semibold text-white/90">{blog.title}</h2>
-
-                                    {/*Using the stripHtml function before creating the substring. */}
                                     <p className="text-sm text-white/60 line-clamp-3">
                                         {stripHtml(blog.content).substring(0, 150)}....
                                     </p>
-
                                     <a
                                         href={`/blog/${blog._id}`}
                                         target="_blank"
@@ -122,18 +121,15 @@ const BlogListing = () => {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
                                     </a>
-
                                 </div>
                             </div>
                         ))}
                     </div>
-                    {/* Pagination Controls */}
                     <div className="flex justify-center w-[100%] items-center gap-2 mt-8 mb-8">
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className="px-4 py-2 text-white w-24 bg-white/30 rounded-lg  
-                                         hover:bg-white/20 transition-all duration-300"
+                            className="px-4 py-2 text-white w-24 bg-white/30 rounded-lg hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Previous
                         </button>
@@ -143,13 +139,11 @@ const BlogListing = () => {
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className="px-4 py-2 text-white w-24 bg-white/30 rounded-lg  
-                                         hover:bg-white/20 transition-all duration-300"
+                            className="px-4 py-2 text-white w-24 bg-white/30 rounded-lg hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Next
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
