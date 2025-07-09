@@ -160,7 +160,7 @@ const BlogDetail = () => {
                     <div className='w-full flex items-center mb-10 p-2'>
                         <div
                             className="aiDiv p-4 rounded-2xl w-full bg-white/10 border border-white/20 shadow-lg backdrop-blur-md backdrop-saturate-150 transition">
-                            <h3 className="text-center text-2xl font-semibold mb-2 text-[#ffd75e]">Ask AI about this blog post or more</h3>
+                            <h3 className="text-center text-2xl font-semibold mb-2 text-[#ffd75e]">Ask AI about this blog postgit </h3>
                             <textarea
                                 className="w-full p-3 rounded bg-black/60 text-white mb-2"
                                 rows={3}
