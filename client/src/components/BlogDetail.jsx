@@ -15,6 +15,11 @@ import './BlogContent.css';
 const BlogDetail = () => {
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [aiQuestion, setAiQuestion] = useState('');
+    const [aiAnswer, setAiAnswer] = useState('');
+    const [aiLoading, setAiLoading] = useState(false);
+    const [aiError, setAiError] = useState('');
+    const [dots, setDots] = useState("");
     const { id } = useParams();
     const navigate = useNavigate();
     const { owner } = useAuth();
@@ -37,6 +42,45 @@ const BlogDetail = () => {
         fetchBlog();
         window.scrollTo(0, 0);
     }, [id]);
+
+    const handleAskAI = async () => {
+        setAiLoading(true);
+        setAiAnswer('');
+        setAiError('');
+        try {
+            const res = await fetch(`${API_BASE_URL}/ai/ask`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    blogContent: blog.content,
+                    question: aiQuestion
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setAiAnswer(data.answer);
+            } else {
+                setAiError(data.error || 'Failed to get AI response.');
+            }
+        } catch (err) {
+            setAiError('Server error. Please try again.');
+        } finally {
+            setAiLoading(false);
+        }
+    };
+
+    useEffect(() => {
+    if (!aiLoading) {
+        setDots('');
+        return;
+    }
+
+    const interval = setInterval(() => {
+        setDots(prev => (prev.length >= 4 ? '.' : prev + '.'));
+    }, 500);
+
+    return () => clearInterval(interval);
+}, [aiLoading]);
 
     if (loading) {
         return (
@@ -111,6 +155,34 @@ const BlogDetail = () => {
                                     </>
                                 )}
                             </div>
+                        </div>
+                    </div>
+                    <div className='w-full flex items-center mb-10 p-2'>
+                        <div
+                            className="aiDiv p-4 rounded-2xl w-full bg-white/10 border border-white/20 shadow-lg backdrop-blur-md backdrop-saturate-150 transition">
+                            <h3 className="text-center text-2xl font-semibold mb-2 text-[#ffd75e]">Ask AI about this blog post or more</h3>
+                            <textarea
+                                className="w-full p-3 rounded bg-black/60 text-white mb-2"
+                                rows={3}
+                                placeholder="Type your question about this blog post..."
+                                value={aiQuestion}
+                                onChange={e => setAiQuestion(e.target.value)}
+                                disabled={aiLoading}
+                            />
+                            <button
+                                className="bg-[#ffc72d] w-40 text-black px-4 py-2 rounded font-bold hover:bg-[#ffd75e] transition"
+                                onClick={handleAskAI}
+                                disabled={aiLoading || !aiQuestion.trim()}
+                            >
+                                {aiLoading ? `Asking AI${dots}` : 'Ask AI'}
+                            </button>
+                            {aiError && <div className="text-red-400 mt-2">{aiError}</div>}
+                            {aiAnswer && (
+                                <div className="mt-4 p-4 bg-white/10 rounded text-white">
+                                    <strong>AI Answer:</strong>
+                                    <div className="mt-2 whitespace-pre-line">{aiAnswer}</div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require('path');
+require('dotenv').config();
 const indexRouter = require("./routes/indexRouter");
 const blogRoute = require("./routes/blogRoute");
 const ownerRoute =require("./routes/ownerRoute");
-require('dotenv').config();
+const aiRoute = require('./routes/aiRoute');
 const cookieParser = require('cookie-parser');
 const app = express();
 
@@ -59,6 +60,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
+app.use('/ai', aiRoute);
 
 
 // --- SPA Fallback and Static Serving (No changes needed) ---
