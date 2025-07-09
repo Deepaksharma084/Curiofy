@@ -3,16 +3,21 @@ services:
     name: curiofy-backend
     env: node
     plan: free
+    
     buildCommand: cd server && npm install && cd ../client && npm install && npm run build
     startCommand: cd server && node index.js
+
     staticPublishPath: ./client/dist
+    
     envVars:
       - key: MONGO_URI
         fromSecret: true
+
     headers:
       - path: /index.html
         name: Cache-Control
-        value: no-cache, no-store, must-revalidate
+        value: no-cache, must-revalidate, max-age=0
+        
     routes:
       - type: rewrite
         source: /*
