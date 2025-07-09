@@ -2,9 +2,31 @@ services:
   - type: web
     name: curiofy-backend
     env: node
+    plan: free 
     buildCommand: cd server && npm install && cd ../client && npm install && npm run build
     startCommand: cd server && node index.js
-    staticPublishPath: client/dist
+    staticPublishPath: ./client/dist
+    envVars:
+      - key: MONGO_URI
+        fromSecret: true
+      - key: FRONTEND_URL 
+        value: https://curiofy.onrender.com
+    headers:
+      - path: /index.html
+        name: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - path: /blogs/*
+        name: Access-Control-Allow-Origin
+        value: ${FRONTEND_URL} 
+      - path: /blogs/*
+        name: Access-Control-Allow-Methods
+        value: GET, POST, PUT, DELETE, OPTIONS
+      - path: /blogs/*
+        name: Access-Control-Allow-Headers
+        value: Content-Type, Authorization
+      - path: /blogs/*
+        name: Access-Control-Allow-Credentials
+        value: 'true'
     routes:
       - type: rewrite
         source: /*
