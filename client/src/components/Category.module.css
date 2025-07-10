@@ -5,6 +5,7 @@
     position: relative;
     display: grid;
     place-items: center;
+    z-index: 1;
 }
 
 .mwg_effect000 .header {
@@ -27,34 +28,6 @@
 .mwg_effect000 .header div:last-child {
     display: flex;
     justify-content: flex-end;
-}
-
-.mwg_effect000 .button {
-    font-size: 14px;
-    text-transform: uppercase;
-
-    border-radius: 24px;
-    height: 48px;
-    gap: 5px;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    width: max-content;
-}
-
-.mwg_effect000 .button1 {
-    background-color: #232323;
-}
-
-.mwg_effect000 .button2 {
-    border: 1px solid #323232;
-}
-
-
-.mwg_effect000 .button img {
-    width: 22px;
-    height: auto;
-    display: block;
 }
 
 .mwg_effect000 .medias {

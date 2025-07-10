@@ -65,8 +65,8 @@ const MWGEffect = () => {
 
                 tl.to(image, {
                     inertia: {
-                        x: { velocity: deltaX * 8, end: 0 },
-                        y: { velocity: deltaY * 8, end: 0 }
+                        x: { velocity: deltaX * 1, end: 0 },
+                        y: { velocity: deltaY * 1, end: 0 }
                     },
                 })
 
@@ -110,7 +110,7 @@ const MWGEffect = () => {
             <div className={Animation.medias}>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Tech and electronics")}>
                     <img src={img1} alt="" />
-                    <span className={Animation.categoryText}>Tech and electronics</span>
+                    <span className={Animation.categoryText}>Tech</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Health")}>
                     <img src={img2} alt="" />
@@ -122,7 +122,7 @@ const MWGEffect = () => {
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Food & Recipes")}>
                     <img src={img4} alt="" />
-                    <span className={Animation.categoryText}>Food & Recipes</span>
+                    <span className={Animation.categoryText}>Food</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Growth")}>
                     <img src={img5} alt="" />

@@ -21,7 +21,8 @@ router.post('/ask', async (req, res) => {
     const model = 'models/gemini-1.5-flash'; // or 'models/gemini-pro'/'models/gemini-pro-vision'
     const url = `https://generativelanguage.googleapis.com/v1/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
-    const prompt = `You are an expert assistant. Given the following blog post, answer the user's question as helpfully as possible.\n\n---\nBLOG POST:\n${blogContent}\n---\nQUESTION: ${question}\n\nANSWER:`;
+    const prompt = `You are a knowledgeable assistant. Answer the user's question naturally and clearly using both the provided blog post and your broader knowledge. If the blog doesn't include the answer, use your own information and expertise.\n\nBlog Post:\n${blogContent}\n\nUser Question:\n${question}\n\nAnswer:`;
+
 
     const body = {
       contents: [{ parts: [{ text: prompt }] }]
@@ -45,7 +46,7 @@ router.post('/ask', async (req, res) => {
       res.status(500).json({ error: 'Unexpected Gemini API response.', details: data });
     }
   } catch (err) {
-    res.status(500).json({ error: 'Server error contacting Gemini.',errors: err.message });
+    res.status(500).json({ error: 'Server error contacting Gemini.', errors: err.message });
   }
 });
 

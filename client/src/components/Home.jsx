@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './HomePage.module.css'; 
+import styles from './HomePage.module.css';
 import MWGEffect from './Category';
 import img1 from '../assets/medias/mainImage.png';
 import RotatingWords from './RotatingWords';
+import auroraEffect from './AuroraEffect.module.css';
 
 
 export default function Home() {
@@ -35,12 +36,15 @@ export default function Home() {
                         <div className='child2'>
                             <div className='subchild3 flex flex-col items-center w-full bg-transparent md:mt-10 mb-8'>
                                 <div className='flex flex-col justify-center items-center bg-transparent mb-2'>
-                                    <h1 className='text-white whitespace-pre p-2 font-bold text-base md:text-2xl'>WELCOME TO THE WORLD OF CURIOSITY</h1>
-                                    <p className='text-zinc-400 text-md p-2'>
-                                        <RotatingWords/>
+                                    <h1 className='text-white whitespace-pre font-bold text-base md:text-2xl'>WELCOME TO THE WORLD OF CURIOSITY</h1>
+                                    <p className='text-zinc-400 text-sm'>
+                                        <RotatingWords />
                                     </p>
                                 </div>
-                                <MWGEffect />
+                                <div className={`${auroraEffect.auroraBg} overflow-visible backdrop-blur-2xl md:p-8 px-3 py-4 rounded-2xl`}>
+                                    <h1 className='text-white font-bold text-center mb-6'>Categories</h1>
+                                    <MWGEffect />
+                                </div>
                             </div>
                         </div>
                     </div>
