@@ -88,7 +88,7 @@ export default function CreateBlogForm() {
   return (
     <div className={styles.blogContainer}>
       <div className={styles.overlay}>
-        <div className="backdrop-blur-xl bg-white/5 p-8 rounded-3xl shadow-2xl w-[42rem] border border-white/20">
+        <div className="backdrop-blur-xl bg-white/5 p-8 rounded-3xl shadow-2xl w-[48rem] m-2 border border-white/20">
           <h2 className="text-2xl font-semibold text-white mb-6 text-center">Create Blog</h2>
 
           <form className="space-y-8" onSubmit={handleSubmit}>
@@ -139,10 +139,10 @@ export default function CreateBlogForm() {
                 required
               >
                 <option value="" disabled className="text-gray-800">Select a category</option>
-                <option value="Tech and electronics" className="text-gray-800">Tech and electronics</option>
+                <option value="Tech" className="text-gray-800">Tech</option>
                 <option value="Health" className="text-gray-800">Health</option>
                 <option value="Travel" className="text-gray-800">Travel</option>
-                <option value="Food & Recipes" className="text-gray-800">Food & Recipes</option>
+                <option value="Food" className="text-gray-800">Food</option>
                 <option value="Growth" className="text-gray-800">Growth</option>
                 <option value="Finance" className="text-gray-800">Finance</option>
                 <option value="Learning" className="text-gray-800">Learning</option>

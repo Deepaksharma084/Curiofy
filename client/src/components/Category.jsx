@@ -108,7 +108,7 @@ const MWGEffect = () => {
 
         <section className={`${Animation.mwg_effect000}`} ref={rootRef}>
             <div className={Animation.medias}>
-                <div className={Animation.media} onClick={() => handleCategoryClick("Tech and electronics")}>
+                <div className={Animation.media} onClick={() => handleCategoryClick("Tech")}>
                     <img src={img1} alt="" />
                     <span className={Animation.categoryText}>Tech</span>
                 </div>
@@ -120,7 +120,7 @@ const MWGEffect = () => {
                     <img src={img3} alt="" />
                     <span className={Animation.categoryText}>Travel</span>
                 </div>
-                <div className={Animation.media} onClick={() => handleCategoryClick("Food & Recipes")}>
+                <div className={Animation.media} onClick={() => handleCategoryClick("Food")}>
                     <img src={img4} alt="" />
                     <span className={Animation.categoryText}>Food</span>
                 </div>
