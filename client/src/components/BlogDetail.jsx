@@ -128,8 +128,8 @@ const BlogDetail = () => {
                             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
                         />
 
-                        <div className={`${auroraEffect.auroraBg} backdrop-blur-2xl md:p-8 px-3 py-4 rounded-2xl`}>
-                            <div className='w-full flex items-center md:mt-2 md:mb-2 md:p-2'>
+                        <div className={`${auroraEffect.auroraBg} backdrop-blur-2xl md:p-8 px-3 py-4 rounded-2xl mt-8`}>
+                            <div className='w-full flex items-center mt-2 mb-2 md:p-2'>
                                 <div
                                     className="aiDiv md:p-4 px-2 py-4 rounded-2xl w-full bg-white/10 border border-white/20 shadow-lg backdrop-blur-md backdrop-saturate-150 transition">
                                     <h3 className="text-center text-2xl font-semibold mb-2 text-[#ffd75e]">Ask AI about this blog post</h3>
