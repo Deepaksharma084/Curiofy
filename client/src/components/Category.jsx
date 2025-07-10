@@ -83,7 +83,7 @@ const MWGEffect = () => {
                     { rotate: 0 },
                     {
                         duration: 0.4,
-                        rotate: (Math.random() - 0.5) * 30,
+                        rotate: (Math.random() - 0.5) * 10,
                         yoyo: true,
                         repeat: 1,
                         ease: 'power1.inOut',

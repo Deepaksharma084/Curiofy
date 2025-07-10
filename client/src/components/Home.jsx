@@ -42,7 +42,7 @@ export default function Home() {
                                     </p>
                                 </div>
                                 <div className={`${auroraEffect.auroraBg} overflow-visible backdrop-blur-2xl md:p-8 px-3 py-4 rounded-2xl`}>
-                                    <h1 className='text-white font-bold text-center mb-6'>Categories</h1>
+                                    <h1 className='text-white font-bold text-center mb-6 text-2xl'>Categories</h1>
                                     <MWGEffect />
                                 </div>
                             </div>
