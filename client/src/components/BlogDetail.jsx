@@ -129,12 +129,12 @@ const BlogDetail = () => {
                         />
 
                         <div className={`${auroraEffect.auroraBg} backdrop-blur-2xl md:p-8 px-3 py-4 rounded-2xl`}>
-                            <div className='w-full flex items-center mt-10 mb-10 p-2'>
+                            <div className='w-full flex items-center md:mt-2 md:mb-2 md:p-2'>
                                 <div
-                                    className="aiDiv p-4 rounded-2xl w-full bg-white/10 border border-white/20 shadow-lg backdrop-blur-md backdrop-saturate-150 transition">
+                                    className="aiDiv md:p-4 px-2 py-4 rounded-2xl w-full bg-white/10 border border-white/20 shadow-lg backdrop-blur-md backdrop-saturate-150 transition">
                                     <h3 className="text-center text-2xl font-semibold mb-2 text-[#ffd75e]">Ask AI about this blog post</h3>
                                     <textarea
-                                        className="w-full p-8 rounded bg-black/60 text-white mb-2"
+                                        className="w-full md:p-8 p-3 rounded bg-black/60 text-white mb-2"
                                         rows={3}
                                         placeholder="Type your question about this blog post..."
                                         value={aiQuestion}
@@ -154,7 +154,7 @@ const BlogDetail = () => {
                                     {aiAnswer && (
                                         <div className="mt-4 p-4 bg-white/10 rounded text-white">
                                             <strong>AI Answer:</strong>
-                                            <div className="mt-2 p-8 whitespace-pre-line bg-black/60">{aiAnswer}</div>
+                                            <div className="mt-2 md:p-8 p-3 whitespace-pre-line bg-black/60">{aiAnswer}</div>
                                         </div>
                                     )}
                                 </div>
