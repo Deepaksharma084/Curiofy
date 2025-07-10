@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const router = express.Router();
 const fetch = require('node-fetch'); // npm install node-fetch@2
 
@@ -18,7 +19,7 @@ router.post('/ask', async (req, res) => {
   try {
     // Use Gemini Pro or fallback to Gemini Flash
     const model = 'models/gemini-1.5-flash'; // or 'models/gemini-pro'/'models/gemini-pro-vision'
-    const url = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${GEMINI_API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
     const prompt = `You are an expert assistant. Given the following blog post, answer the user's question as helpfully as possible.\n\n---\nBLOG POST:\n${blogContent}\n---\nQUESTION: ${question}\n\nANSWER:`;
 
@@ -33,16 +34,18 @@ router.post('/ask', async (req, res) => {
     });
 
     const data = await response.json();
+    console.log('Gemini API response:', data);
 
     if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
       res.json({ answer: data.candidates[0].content.parts[0].text });
     } else if (data.error && data.error.status === 'RESOURCE_EXHAUSTED') {
       res.status(429).json({ error: 'Daily Gemini API quota reached. Please try again tomorrow.' });
     } else {
-      res.status(500).json({ error: 'Failed to get a response from Gemini.' });
+      console.error('Unexpected Gemini response:', data);
+      res.status(500).json({ error: 'Unexpected Gemini API response.', details: data });
     }
   } catch (err) {
-    res.status(500).json({ error: 'Server error contacting Gemini.' });
+    res.status(500).json({ error: 'Server error contacting Gemini.',errors: err.message });
   }
 });
 

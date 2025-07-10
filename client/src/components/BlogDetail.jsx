@@ -39,7 +39,7 @@ const BlogDetail = () => {
                 setLoading(false);
             }
         };
-        fetchBlog();
+        fetchBlog();    
         window.scrollTo(0, 0);
     }, [id]);
 
@@ -70,17 +70,17 @@ const BlogDetail = () => {
     };
 
     useEffect(() => {
-    if (!aiLoading) {
-        setDots('');
-        return;
-    }
+        if (!aiLoading) {
+            setDots('');
+            return;
+        }
 
-    const interval = setInterval(() => {
-        setDots(prev => (prev.length >= 4 ? '.' : prev + '.'));
-    }, 500);
+        const interval = setInterval(() => {
+            setDots(prev => (prev.length >= 4 ? '.' : prev + '.'));
+        }, 500);
 
-    return () => clearInterval(interval);
-}, [aiLoading]);
+        return () => clearInterval(interval);
+    }, [aiLoading]);
 
     if (loading) {
         return (
@@ -127,6 +127,35 @@ const BlogDetail = () => {
                             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
                         />
 
+                        <div className='w-full flex items-center mt-10 mb-10 p-2'>
+                                    <div
+                                        className="aiDiv p-4 rounded-2xl w-full bg-white/10 border border-white/20 shadow-lg backdrop-blur-md backdrop-saturate-150 transition">
+                                        <h3 className="text-center text-2xl font-semibold mb-2 text-[#ffd75e]">Ask AI about this blog post</h3>
+                                        <textarea
+                                            className="w-full p-3 rounded bg-black/60 text-white mb-2"
+                                            rows={3}
+                                            placeholder="Type your question about this blog post..."
+                                            value={aiQuestion}
+                                            onChange={e => setAiQuestion(e.target.value)}
+                                            disabled={aiLoading}
+                                        />
+                                        <button
+                                            className="bg-[#ffc72d] w-40 text-black px-4 py-2 rounded font-bold hover:bg-[#ffd75e] transition"
+                                            onClick={handleAskAI}
+                                            disabled={aiLoading || !aiQuestion.trim()}
+                                        >
+                                            {aiLoading ? `Asking AI${dots}` : 'Ask AI'}
+                                        </button>
+                                        {aiError && <div className="text-red-400 mt-2">{aiError}</div>}
+                                        {aiAnswer && (
+                                            <div className="mt-4 p-4 bg-white/10 rounded text-white">
+                                                <strong>AI Answer:</strong>
+                                                <div className="mt-2 whitespace-pre-line">{aiAnswer}</div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
                         <div className="flex gap-4 mt-8">
                             <div className='flex sm:flex-row gap-2 items-center justify-center w-full'>
                                 <button onClick={() => navigate(`/blogs/${blog.category}`)} className={ExploreMoreButtonStyle.button}>
@@ -143,6 +172,7 @@ const BlogDetail = () => {
                                         />
                                     </svg>
                                 </button>
+                 
                                 {owner && (
                                     <>
                                         <button onClick={() => navigate(`/blog/edit/${blog._id}`)} className={UpdateButtonStyle.button}>
@@ -157,34 +187,7 @@ const BlogDetail = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='w-full flex items-center mb-10 p-2'>
-                        <div
-                            className="aiDiv p-4 rounded-2xl w-full bg-white/10 border border-white/20 shadow-lg backdrop-blur-md backdrop-saturate-150 transition">
-                            <h3 className="text-center text-2xl font-semibold mb-2 text-[#ffd75e]">Ask AI about this blog post</h3>
-                            <textarea
-                                className="w-full p-3 rounded bg-black/60 text-white mb-2"
-                                rows={3}
-                                placeholder="Type your question about this blog post..."
-                                value={aiQuestion}
-                                onChange={e => setAiQuestion(e.target.value)}
-                                disabled={aiLoading}
-                            />
-                            <button
-                                className="bg-[#ffc72d] w-40 text-black px-4 py-2 rounded font-bold hover:bg-[#ffd75e] transition"
-                                onClick={handleAskAI}
-                                disabled={aiLoading || !aiQuestion.trim()}
-                            >
-                                {aiLoading ? `Asking AI${dots}` : 'Ask AI'}
-                            </button>
-                            {aiError && <div className="text-red-400 mt-2">{aiError}</div>}
-                            {aiAnswer && (
-                                <div className="mt-4 p-4 bg-white/10 rounded text-white">
-                                    <strong>AI Answer:</strong>
-                                    <div className="mt-2 whitespace-pre-line">{aiAnswer}</div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
