@@ -19,14 +19,7 @@ export async function registerOwner(req, res) {
         });
 
         let token = generateToken(owner);
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-            maxAge: 24 * 60 * 60 * 1000, // 24 hours
-            path: '/' //cookie is sent to all routes on the domain
-        });
-
+        
         // Sending success response
         res.status(201).json({ message: "Owner registered successfully", token });
 
@@ -52,15 +45,6 @@ export async function loginOwner(req, res) {
                 _id: owner._id,
                 email: owner.email
             };
-
-            // Set cookie with appropriate options for production
-            res.cookie('jwt', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // true in production
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-                maxAge: 24 * 60 * 60 * 1000, // 24 hours
-                path: '/'
-            });
 
             return res.status(200).json({
                 message: "Owner logged in successfully",
