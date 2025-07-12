@@ -1,14 +1,19 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const path = require('path');
-require('dotenv').config();
-const blogRoute = require("./routes/blogRoute");
-const ownerRoute =require("./routes/ownerRoute");
-const aiRoute = require('./routes/aiRoute');
-const cookieParser = require('cookie-parser');
-const app = express();
+import express from "express";
+import mongoose from "mongoose";
+import path from "path";
+import dotenv from "dotenv";
+import blogRoute from "./routes/blogRoute.js";
+import ownerRoute from "./routes/ownerRoute.js";
+import aiRoute from "./routes/aiRoute.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import { fileURLToPath } from "url";
 
-// --- Database Connection (No changes needed) ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+dotenv.config();
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
     console.log('Connected to MongoDB');
@@ -16,10 +21,7 @@ mongoose.connect(process.env.MONGO_URI, {
     console.error('MongoDB connection error:', err);
 });
 
-// --- THE CORS FIX ---
-const cors = require('cors');
-
-// Define the origins that are allowed to access your backend
+// Defining the origins that are allowed to access backend
 const allowedOrigins = [
     'https://curiofy.onrender.com',
     'http://localhost:5173',
@@ -45,24 +47,19 @@ const corsOptions = {
 // It tells Express to handle OPTIONS requests globally and apply CORS.
 app.options('*', cors(corsOptions));
 
-// Now, use the CORS middleware for all other requests.
+// using the CORS middleware for all other requests.
 app.use(cors(corsOptions));
 
 
-// --- Standard Middleware (No changes needed) ---
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-// --- API Routes (No changes needed) ---
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
 app.use('/ai', aiRoute);
 
-
-// --- SPA Fallback and Static Serving (No changes needed) ---
-// This part is likely not being used in your Render setup, but it's fine to keep.
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));

@@ -1,7 +1,10 @@
-const express = require('express');
-require('dotenv').config();
+import express from 'express';
+import dotenv from 'dotenv';
+import fetch from 'node-fetch';
+
+dotenv.config();
+
 const router = express.Router();
-const fetch = require('node-fetch'); // npm install node-fetch@2
 
 // Load your Gemini API key from environment variable
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -50,4 +53,4 @@ router.post('/ask', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

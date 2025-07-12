@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const ownerModel = require('../models/owner-model');
+import jwt from 'jsonwebtoken';
+import Owner from '../models/owner-model.js';
 
-module.exports = async (req, res, next) => {
+const isOwnerLogdin = async (req, res, next) => {
     if (!req.cookies.jwt) {
         return res.status(401).json({ error: "You need to login first" }); // Return JSON response
     }
@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
     try {
         const decoded = jwt.verify(req.cookies.jwt, process.env.JWT_KEY);
 
-        let owner = await ownerModel.findOne({ email: decoded.email }).select("-password");
+        let owner = await Owner.findOne({ email: decoded.email }).select("-password");
         if (!owner) {
             return res.status(401).json({ error: "Invalid authentication token" });
         }
@@ -20,3 +20,5 @@ module.exports = async (req, res, next) => {
         return res.status(401).json({ error: err.message }); // Return JSON response
     }
 };
+
+export default isOwnerLogdin;

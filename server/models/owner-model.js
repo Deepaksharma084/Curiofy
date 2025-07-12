@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const ownerSchema = mongoose.Schema({
+const ownerSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Owner', ownerSchema);
+const Owner = mongoose.model('Owner', ownerSchema);
+export default Owner;

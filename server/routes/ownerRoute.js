@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
+import { registerOwner, loginOwner, logoutOwner, updateOwner } from '../controllers/authController.js';
+import isOwnerLogdin from '../middleware/isOwnerLogdin.js';
+
 const router = express.Router();
-const { registerOwner, loginOwner, logoutOwner, updateOwner } = require('../controllers/authController');
-const isOwnerLogdin = require('../middleware/isOwnerLogdin');
 
 router.post("/register", registerOwner);
 router.post("/login", loginOwner);
@@ -11,4 +12,4 @@ router.get("/verify", isOwnerLogdin, (req, res) => {
 });
 router.put("/updateOwner", isOwnerLogdin, updateOwner);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,7 @@
-const express = require("express");
-const Blog = require("../models/blog-model");
-const isOwnerLogdin = require("../middleware/isOwnerLogdin");
+import express from "express";
+import Blog from "../models/blog-model.js";
+import isOwnerLogdin from "../middleware/isOwnerLogdin.js";
+
 const router = express.Router();
 
 router.post("/create", isOwnerLogdin, async (req, res) => {
@@ -136,4 +137,4 @@ router.delete("/delete/:id", isOwnerLogdin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
