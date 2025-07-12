@@ -1,8 +1,8 @@
-const ownerModel = require('../models/owner-model');
-const bcrypt = require('bcrypt');
-const { generateToken } = require('../utils/generateToken');
+import ownerModel from '../models/owner-model.js';
+import bcrypt from 'bcrypt';
+import { generateToken } from '../utils/generateToken.js';
 
-module.exports.registerOwner = async (req, res) => {
+export async function registerOwner(req, res) {
     try {
         let { email, password } = req.body;
 
@@ -30,7 +30,7 @@ module.exports.registerOwner = async (req, res) => {
 };
 
 
-module.exports.loginOwner = async (req, res) => {
+export async function loginOwner(req, res) {
     try {
         let { email, password } = req.body;
         const owner = await ownerModel.findOne({ email: email });
@@ -70,7 +70,7 @@ module.exports.loginOwner = async (req, res) => {
 };
 
 
-module.exports.logoutOwner = async (req, res) => {
+export async function logoutOwner(req, res) {
     try {
         res.clearCookie('jwt');
         res.status(200).json({ message: "Owner logged out successfully" });
@@ -80,7 +80,7 @@ module.exports.logoutOwner = async (req, res) => {
 };
 
 
-module.exports.updateOwner = async (req, res) => {
+export async function updateOwner(req, res) {
     try {
         const { email, password } = req.body;
         const updates = {};
