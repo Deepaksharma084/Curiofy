@@ -18,7 +18,7 @@ export async function registerOwner(req, res) {
             password: hashedpass,
         });
 
-        let token = generateAndSetToken(owner);
+        let token = generateAndSetToken(owner, res);
         
         // Sending success response
         res.status(201).json({ message: "Owner registered successfully", token });
@@ -40,7 +40,7 @@ export async function loginOwner(req, res) {
 
         const result = await bcrypt.compare(password, owner.password);
         if (result) {
-            let token = generateAndSetToken(owner);
+            let token = generateAndSetToken(owner, res);
             const ownerData = {
                 _id: owner._id,
                 email: owner.email
