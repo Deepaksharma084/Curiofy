@@ -5,7 +5,7 @@ import styles from './BlogDetail.module.css';
 import { API_BASE_URL } from '../config';
 // Importing ReactQuill and its CSS
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // for snow theme
+import 'quill/dist/quill.snow.css'; // for snow theme
 import './QuillEditor.css';
 
 export default function CreateBlogForm() {

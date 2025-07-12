@@ -6,7 +6,7 @@ import styles from './BlogDetail.module.css';
 import Loader from './Loader';
 //Imports for the Rich Text Editor
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'quill/dist/quill.snow.css';
 import './QuillEditor.css';
 
 export default function BlogUpdate() {
