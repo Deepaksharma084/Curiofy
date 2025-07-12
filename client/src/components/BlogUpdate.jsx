@@ -86,7 +86,7 @@ export default function BlogUpdate() {
   return (
     <div className={styles.blogContainer}>
       <div className={styles.overlay}>
-        <div className="backdrop-blur-xl bg-white/5 p-8 rounded-3xl shadow-2xl w-[42rem] border border-white/20">
+        <div className="backdrop-blur-xl bg-white/5 p-8 mt-8 mb-8 rounded-3xl shadow-2xl w-[42rem] border border-white/20">
           <h2 className="text-2xl font-semibold text-white mb-6 text-center">Update Blog</h2>
           {success && <div className="bg-green-500/20 text-green-300 p-3 rounded-lg mb-4">{success}</div>}
           {error && <div className="bg-red-500/20 text-red-300 p-3 rounded-lg mb-4">{error}</div>}
