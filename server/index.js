@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require('path');
 require('dotenv').config();
-const indexRouter = require("./routes/indexRouter");
 const blogRoute = require("./routes/blogRoute");
 const ownerRoute =require("./routes/ownerRoute");
 const aiRoute = require('./routes/aiRoute');
@@ -57,7 +56,6 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // --- API Routes (No changes needed) ---
-app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
 app.use('/ai', aiRoute);
