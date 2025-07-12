@@ -19,7 +19,13 @@ export async function registerOwner(req, res) {
         });
 
         let token = generateToken(owner);
-        res.cookie('jwt', token, { httpOnly: true });
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 24 * 60 * 60 * 1000, // 24 hours
+            path: '/' //cookie is sent to all routes on the domain
+        });
 
         // Sending success response
         res.status(201).json({ message: "Owner registered successfully", token });
