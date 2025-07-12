@@ -154,7 +154,7 @@ export default function CreateBlogForm() {
               </select>
             </div>
 
-            {/* --- REPLACED TEXTAREA WITH REACT-QUILL --- */}
+            {/* --- REACT-QUILL --- */}
             <div className="space-y-2">
               <label className="text-sm text-white">Content</label>
               <ReactQuill

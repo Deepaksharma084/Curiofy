@@ -9,8 +9,8 @@ const router = express.Router();
 // Load your Gemini API key from environment variable
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-// POST /ai/ask
 router.post('/ask', async (req, res) => {
+  
   const { blogContent, question } = req.body;
   if (!blogContent || !question) {
     return res.status(400).json({ error: 'Missing blog content or question.' });
@@ -20,8 +20,7 @@ router.post('/ask', async (req, res) => {
   }
 
   try {
-    // Use Gemini Pro or fallback to Gemini Flash
-    const model = 'models/gemini-1.5-flash'; // or 'models/gemini-pro'/'models/gemini-pro-vision'
+    const model = 'models/gemini-1.5-flash';
     const url = `https://generativelanguage.googleapis.com/v1/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
     const prompt = `You are a knowledgeable assistant. Answer the user's question naturally and clearly using both the provided blog post and your broader knowledge. If the blog doesn't include the answer, use your own information and expertise.\n\nBlog Post:\n${blogContent}\n\nUser Question:\n${question}\n\nAnswer:`;
@@ -51,6 +50,7 @@ router.post('/ask', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Server error contacting Gemini.', errors: err.message });
   }
+
 });
 
 export default router;

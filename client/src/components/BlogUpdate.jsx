@@ -128,7 +128,7 @@ export default function BlogUpdate() {
               </select>
             </div>
 
-            {/*REPLACED THE TEXTAREA WITH THIS*/}
+            {/* --- REACT-QUILL --- */}
             <div className="space-y-2">
               <label className="text-sm text-white">Content</label>
               <ReactQuill
