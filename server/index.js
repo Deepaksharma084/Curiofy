@@ -4,9 +4,9 @@ import path from "path";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import indexRouter from "./routes/indexRouter.js";
 import blogRoute from "./routes/blogRoute.js";
 import ownerRoute from "./routes/ownerRoute.js";
+import aiRoute from "./routes/aiRoute.js";
 import { fileURLToPath } from 'url';
 
 // Setup __dirname in ES Module
@@ -50,9 +50,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", indexRouter);
 app.use("/blogs", blogRoute);
 app.use("/owner", ownerRoute);
+app.use('/ai', aiRoute);
 
 // Static & SPA Fallback
 app.use(express.static(path.join(__dirname, '../client/dist')));
