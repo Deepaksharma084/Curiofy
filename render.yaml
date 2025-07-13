@@ -1,19 +1,74 @@
 services:
-  - type: web
-    name: curiofy-backend
-    env: node
-    plan: free
-    
-    buildCommand: cd server && npm install && cd ../client && npm install && npm run build
-    startCommand: cd server && node index.js
-
+  # Service 1: The React Frontend (Static Site)
+  # This service lives at https://curiofy.onrender.com
+  - type: static
+    name: curiofy # Or your exact frontend service name
+    env: static
+    # Assumes your frontend code is in the 'client' directory
+    buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/dist
-    
-    envVars:
-      - key: MONGO_URI
-        fromSecret: true
-        
+    headers:
+      # Caching Fix: Prevents the app shell from getting stale
+      - path: '/*'
+        name: 'Cache-Control'
+        value: 'no-cache, must-revalidate, max-age=0'
     routes:
+      # SPA Fix: Ensures deep links like /blogs/Tech work correctly
       - type: rewrite
         source: /*
         destination: /index.html
+
+  # Service 2: The Node.js Backend (Web Service)
+  # This service lives at https://curiofy-backend.onrender.com
+  - type: web
+    name: curiofy-backend # Or your exact backend service name
+    env: node
+    plan: free
+    # Assumes your backend code is in the 'server' directory
+    buildCommand: cd server && npm install
+    startCommand: cd server && node index.js
+    envVars:
+      - key: MONGO_URI
+        fromSecret: true
+      - key: GEMINI_API_KEY
+        fromSecret: true
+    headers:
+      # CORS Fix: This is the most critical part. It tells Render's network
+      # how to respond to preflight requests for all API routes.
+      - path: '/blogs/*'
+        name: 'Access-Control-Allow-Origin'
+        value: 'https://curiofy.onrender.com'
+      - path: '/blogs/*'
+        name: 'Access-Control-Allow-Methods'
+        value: 'GET, POST, PUT, DELETE, OPTIONS'
+      - path: '/blogs/*'
+        name: 'Access-Control-Allow-Headers'
+        value: 'Content-Type, Authorization'
+      - path: '/blogs/*'
+        name: 'Access-Control-Allow-Credentials'
+        value: 'true'
+      # Repeat for your other API routes
+      - path: '/owner/*'
+        name: 'Access-Control-Allow-Origin'
+        value: 'https://curiofy.onrender.com'
+      - path: '/owner/*'
+        name: 'Access-Control-Allow-Methods'
+        value: 'GET, POST, PUT, DELETE, OPTIONS'
+      - path: '/owner/*'
+        name: 'Access-Control-Allow-Headers'
+        value: 'Content-Type, Authorization'
+      - path: '/owner/*'
+        name: 'Access-Control-Allow-Credentials'
+        value: 'true'
+      - path: '/ai/*'
+        name: 'Access-Control-Allow-Origin'
+        value: 'https://curiofy.onrender.com'
+      - path: '/ai/*'
+        name: 'Access-Control-Allow-Methods'
+        value: 'GET, POST, PUT, DELETE, OPTIONS'
+      - path: '/ai/*'
+        name: 'Access-Control-Allow-Headers'
+        value: 'Content-Type, Authorization'
+      - path: '/ai/*'
+        name: 'Access-Control-Allow-Credentials'
+        value: 'true'
