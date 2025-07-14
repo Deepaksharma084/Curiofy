@@ -6,12 +6,15 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    // to solve the render chunk warning
+    
+    //so here this tells Vite that we are okay with chunks being larger than the default.
+    // We are setting the limit to 1500 kB.
+    chunkSizeWarningLimit: 1500,
+
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // This groups all your big libraries into a single 'vendor' file
             return 'vendor';
           }
         },
