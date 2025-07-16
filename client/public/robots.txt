@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and auth pages
+Disallow: /owner/
+Disallow: /blogs/create
+Disallow: /blog/edit/
+Disallow: /owner/updateOwner
+
+# Point Google to your sitemap
+Sitemap: https://curiofy.onrender.com/sitemap.xml
