@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { API_BASE_URL } from '../config';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import styles from './BlogListing.module.css';
@@ -65,6 +66,12 @@ const BlogListing = () => {
 
     return (
         <div className={styles.blogContainer}>
+            
+            <Helmet>
+                <title>{`${category} Blogs - Curiofy`}</title>
+                <meta name="description" content={`Explore all the latest blog posts in the ${category} category on Curiofy.`} />
+            </Helmet>
+
             <div className={styles.overlay}>
                 <div className="min-h-screen w-full px-2 sm:px-10 flex flex-col items-center justify-center bg-transparent">
                     <div>

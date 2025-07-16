@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import styles from './HomePage.module.css';
 import MWGEffect from './Category';
 import img1 from '../assets/medias/mainImage.png';
@@ -9,6 +10,11 @@ import auroraEffect from './AuroraEffect.module.css';
 export default function Home() {
     return (
         <>
+            <Helmet>
+                <title>Curiofy - A World of Curiosity</title>
+                <meta name="description" content="Curiofy is a blog where curiosity meets creativity. Explore intriguing ideas, unique perspectives, and inspiring stories across tech, life, culture, and more." />
+            </Helmet>
+
             <div className={styles.authContainer}>
                 <div className={styles.overlay}>
                     <div className="container mx-auto px-4 bg-transparent grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:gap-8 xl:max-w-7xl overflow-visible">

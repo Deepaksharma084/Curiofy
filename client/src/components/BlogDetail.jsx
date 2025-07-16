@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../config';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Helmet } from 'react-helmet-async';
 import DeleteBlogButton from './BlogDelete';
 import styles from './BlogDetail.module.css';
 import auroraEffect from './AuroraEffectForAskAi.module.css';
@@ -105,6 +106,14 @@ const BlogDetail = () => {
 
     return (
         <div className={styles.blogContainerBlackBg}>
+
+            <Helmet>
+                {/* This sets the browser tab title */}
+                <title>{`${blog.title} - Curiofy`}</title>
+                {/*description for better SEO */}
+                <meta name="description" content={`Read the full blog post on ${blog.title}. Explore topics in ${blog.category}.`} />
+            </Helmet>
+
             <div className={styles.overlay}>
                 <div className="px-[0.01rem] py-5">
                     <div
