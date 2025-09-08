@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import styles from './HomePage.module.css';
 import MWGEffect from './Category';
 import img1 from '../assets/medias/mainImage.png';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import RotatingWords from './RotatingWords';
 import auroraEffect from './AuroraEffect.module.css';
 
@@ -34,7 +36,7 @@ export default function Home() {
 
                             <div className='subchild2 -z-10 flex justify-center items-center h-[calc(100vh-8rem)] w-[80%] bg-transparent'>
                                 <div className={styles.mainImageSwing}>
-                                    <img src={img1} alt="" />
+                                    <LazyLoadImage src={img1} alt="Namaste" effect="blur" />
                                 </div>
                             </div>
                         </div>

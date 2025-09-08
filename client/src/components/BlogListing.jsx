@@ -4,6 +4,8 @@ import { API_BASE_URL } from '../config';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import styles from './BlogListing.module.css';
 import Loader from './Loader';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const stripHtml = (html) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -88,9 +90,10 @@ const BlogListing = () => {
                                 className="group relative rounded-2xl bg-[#000000] p-4 transition-all duration-300 hover:translate-y-[-4px]"
                             >
                                 <div className="w-full aspect-video rounded-xl">
-                                    <img
+                                    <LazyLoadImage
                                         src={blog.imageUrl}
                                         alt={blog.title}
+                                        effect='blur'
                                         className="w-full h-full object-contain bg-[#00000077] rounded-xl transition-transform duration-300 group-hover:scale-105"
                                     />
                                 </div>

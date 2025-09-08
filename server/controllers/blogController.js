@@ -9,7 +9,7 @@ export const createBlog = async (req, res) => {
       content,
       category,
       owner: req.owner._id
-    });
+    }); 
     await newBlog.save();
     res.status(201).json({ message: "Blog created", blog: newBlog });
   } catch (err) {
@@ -31,9 +31,9 @@ export const getBlogsByCategory = async (req, res) => {
     const totalBlogs = await Blog.countDocuments({ category: req.params.category });
     const blogs = await Blog.find({ category: req.params.category })
       .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .read('primary');
+      .skip(skip)//pagination logic
+      .limit(limit)//limits the number of blogs returned
+      .read('primary');//Reading from the primary ensures getting the most up-to-date data
 
     res.status(200).json({
       blogs,

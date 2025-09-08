@@ -4,6 +4,8 @@ import { gsap } from 'gsap'
 import { InertiaPlugin } from 'gsap/InertiaPlugin'
 import Animation from './Category.module.css';
 import { useNavigate } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import img1 from '../assets/medias/01.png'
 import img2 from '../assets/medias/02.jpg'
@@ -109,51 +111,51 @@ const MWGEffect = () => {
         <section className={`${Animation.mwg_effect000}`} ref={rootRef}>
             <div className={Animation.medias}>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Tech")}>
-                    <img src={img1} alt="" />
+                    <LazyLoadImage src={img1} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Tech</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Health")}>
-                    <img src={img2} alt="" />
+                    <LazyLoadImage src={img2} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Health</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Travel")}>
-                    <img src={img3} alt="" />
+                    <LazyLoadImage src={img3} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Travel</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Food")}>
-                    <img src={img4} alt="" />
+                    <LazyLoadImage src={img4} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Food</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Growth")}>
-                    <img src={img5} alt="" />
+                    <LazyLoadImage src={img5} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Growth</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Finance")}>
-                    <img src={img6} alt="" />
+                    <LazyLoadImage src={img6} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Finance</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Learning")}>
-                    <img src={img7} alt="" />
+                    <LazyLoadImage src={img7} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Learning</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Gaming")}>
-                    <img src={img8} alt="" />
+                    <LazyLoadImage src={img8} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Gaming</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("DIY & Crafts")}>
-                    <img src={img9} alt="" />
+                    <LazyLoadImage src={img9} alt="" effect="blur" />
                     <span className={Animation.categoryText}>DIY & Crafts</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Photography")}>
-                    <img src={img10} alt="" />
+                    <LazyLoadImage src={img10} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Photography</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Music")}>
-                    <img src={img11} alt="" />
+                    <LazyLoadImage src={img11} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Music</span>
                 </div>
                 <div className={Animation.media} onClick={() => handleCategoryClick("Marketing")}>
-                    <img src={img12} alt="" />
+                    <LazyLoadImage src={img12} alt="" effect="blur" />
                     <span className={Animation.categoryText}>Marketing</span>
                 </div>
             </div>
