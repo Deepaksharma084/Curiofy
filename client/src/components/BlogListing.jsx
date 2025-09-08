@@ -89,7 +89,7 @@ const BlogListing = () => {
                             }} key={blog._id}
                                 className="group relative rounded-2xl bg-[#000000] p-4 transition-all duration-300 hover:translate-y-[-4px]"
                             >
-                                <div className="w-full aspect-video rounded-xl">
+                                <div className="flex justify-center items-center w-full aspect-video rounded-xl">
                                     <LazyLoadImage
                                         src={blog.imageUrl}
                                         alt={blog.title}

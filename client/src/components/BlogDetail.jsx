@@ -13,6 +13,8 @@ import NotFound from './NotFound';
 // Imported for security
 import DOMPurify from 'dompurify';
 import './BlogContent.css';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const BlogDetail = () => {
     const [blog, setBlog] = useState(null);
@@ -119,11 +121,14 @@ const BlogDetail = () => {
                     <div
                         className="mx-auto sm:w-screen bg-black/20 rounded-3xl md:p-16 p-3 py-8 shadow-2xl "
                     >
-                        <img
-                            src={blog.imageUrl}
-                            alt={blog.title}
-                            className="mx-auto md:w-[50rem] h-auto rounded-2xl mb-8"
-                        />
+                        <div className="flex justify-center items-center w-full">
+                            <LazyLoadImage
+                                src={blog.imageUrl}
+                                alt={blog.title}
+                                effect='blur'
+                                className="md:w-[50rem] h-auto rounded-2xl mb-8"
+                            />
+                        </div>
                         <p className="text-sm text-gray-400 mb-2">
                             Published on {new Date(blog.createdAt).toLocaleDateString('en-US', {
                                 year: 'numeric', month: 'long', day: 'numeric',
