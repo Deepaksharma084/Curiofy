@@ -42,7 +42,7 @@ assistant** to help readers dive deeper into topics.
 -   **Rich Text Editor** -- Modern blog writing with React Quill
 -   **Dynamic Categories** -- Blogs organized for easy discovery
 -   **AI-Powered Q&A** -- Google Gemini answers user queries about
-    posts\
+    posts
 -   **SEO Optimized** -- Dynamic titles and meta tags using Helmet
 -   **Smooth Animations** -- GSAP-enhanced UI transitions
 -   **Responsive Design** -- Mobile-friendly and fast
