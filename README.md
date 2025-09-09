@@ -9,27 +9,27 @@ assistant** to help readers dive deeper into topics.
 
 ### 🔗 Live Demo
 
-![Curiofy Screenshot](https://github.com/user-attachments/assets/712095ef-2da3-4e10-9e96-20bd07c1e54c)\
+![Curiofy Screenshot](https://github.com/user-attachments/assets/712095ef-2da3-4e10-9e96-20bd07c1e54c)
 🌐 [curiofy.onrender.com](https://curiofy.onrender.com)
 
 ------------------------------------------------------------------------
 
 ### 🔍 Overview
 
--   **Owner Login**\
-![Owner Login Screenshot](https://github.com/user-attachments/assets/15ecbb7a-8191-4d51-9da4-92d7bc75fa69)\
+-   **Owner Login**
+![Owner Login Screenshot](https://github.com/user-attachments/assets/15ecbb7a-8191-4d51-9da4-92d7bc75fa69)
 
--   **Owner Register**\
-![Owner Register Screenshot](https://github.com/user-attachments/assets/3ea54cec-b9cd-4a67-91f1-d46bd494a693)\
+-   **Owner Register**
+![Owner Register Screenshot](https://github.com/user-attachments/assets/3ea54cec-b9cd-4a67-91f1-d46bd494a693)
 
--   **Create Blog**\
-![Create Blog Screenshot](https://github.com/user-attachments/assets/815512cb-856f-4f45-9dd1-079f21de546a)\
+-   **Create Blog**
+![Create Blog Screenshot](https://github.com/user-attachments/assets/815512cb-856f-4f45-9dd1-079f21de546a)
 
--   **Update Blog**\
-![Update Blog Screenshot](https://github.com/user-attachments/assets/dbf9c721-07e9-4097-832c-3e22ee69b850)\
+-   **Update Blog**
+![Update Blog Screenshot](https://github.com/user-attachments/assets/dbf9c721-07e9-4097-832c-3e22ee69b850)
 
--   **Update Owner Info**\
-![Update Owner Info Screenshot](https://github.com/user-attachments/assets/7224df20-ddac-4c83-b8c2-8347ad64f627)\
+-   **Update Owner Info**
+![Update Owner Info Screenshot](https://github.com/user-attachments/assets/7224df20-ddac-4c83-b8c2-8347ad64f627)
 
 
 ------------------------------------------------------------------------
@@ -37,14 +37,14 @@ assistant** to help readers dive deeper into topics.
 ### ✨ Features
 
 -   **Full CRUD Functionality** -- Create, read, update, and delete blog
+    posts
+-   **Secure Admin Panel** -- JWT-based login for content management
+-   **Rich Text Editor** -- Modern blog writing with React Quill
+-   **Dynamic Categories** -- Blogs organized for easy discovery
+-   **AI-Powered Q&A** -- Google Gemini answers user queries about
     posts\
--   **Secure Admin Panel** -- JWT-based login for content management\
--   **Rich Text Editor** -- Modern blog writing with React Quill\
--   **Dynamic Categories** -- Blogs organized for easy discovery\
--   **AI-Powered Q&A** -- Google Gemini answers user queries about\
-    posts\
--   **SEO Optimized** -- Dynamic titles and meta tags using Helmet\
--   **Smooth Animations** -- GSAP-enhanced UI transitions\
+-   **SEO Optimized** -- Dynamic titles and meta tags using Helmet
+-   **Smooth Animations** -- GSAP-enhanced UI transitions
 -   **Responsive Design** -- Mobile-friendly and fast
 
 ------------------------------------------------------------------------
