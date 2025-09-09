@@ -16,7 +16,7 @@ assistant** to help readers dive deeper into topics.
 
 ### 🔍 Overview
 
--   **Owner Login**
+-   **Owner Login/Logout**
 ![Owner Login Screenshot](https://github.com/user-attachments/assets/15ecbb7a-8191-4d51-9da4-92d7bc75fa69)
 
 -   **Owner Register**
