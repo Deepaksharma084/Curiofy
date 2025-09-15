@@ -39,7 +39,7 @@ const LoginOwner = () => {
                 setSuccess("Login successful!");
                 setOwner(data.owner);
                 setTimeout(() => {
-                    navigate('/blogs/create');
+                    navigate('/');
                 }, 1500);
             } else {
                 setError(data.error || "Invalid email or password");
