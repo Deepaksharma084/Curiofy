@@ -5,6 +5,8 @@ import styles from './AuthPage.module.css';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginOwner = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -41,6 +43,7 @@ const LoginOwner = () => {
                 setTimeout(() => {
                     navigate('/');
                 }, 1500);
+                toast.success("Login successful!");
             } else {
                 setError(data.error || "Invalid email or password");
             }
@@ -56,6 +59,18 @@ const LoginOwner = () => {
 
     return (
         <div className={styles.authContainer}>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
             <div className={styles.overlay}>
                 <div className="backdrop-blur-xl bg-white/10 p-8 rounded-3xl shadow-2xl w-96 border border-white/20">
                     <h2 className="text-2xl font-semibold text-white mb-6 text-center">Login</h2>
