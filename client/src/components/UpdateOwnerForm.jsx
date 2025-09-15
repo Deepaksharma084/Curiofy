@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './AuthPage.module.css';
 import { useAuth } from "../context/AuthContext";
 import { API_BASE_URL } from "../config";
 
 const UpdateOwnerForm = () => {
+    const { owner } = useAuth();
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const { setOwner } = useAuth();
     const navigate = useNavigate();
+
+    //useEffect to redirect if owner is not present
+    useEffect(() => {
+        if (!owner) {
+            navigate("/owner/login");
+        }
+    }, [owner, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

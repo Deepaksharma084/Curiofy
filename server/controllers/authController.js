@@ -1,6 +1,7 @@
 import ownerModel from '../models/owner-model.js';
 import bcrypt from 'bcrypt';
 import { generateAndSetToken } from '../utils/generateAndSetToken.js';
+import isOwnerLogdin from '../middleware/isOwnerLogdin.js';
 
 export async function registerOwner(req, res) {
     try {
@@ -19,7 +20,7 @@ export async function registerOwner(req, res) {
         });
 
         let token = generateAndSetToken(owner, res);
-        
+
         // Sending success response
         res.status(201).json({ message: "Owner registered successfully", token });
 
