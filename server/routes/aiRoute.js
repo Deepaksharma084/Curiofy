@@ -6,51 +6,73 @@ dotenv.config();
 
 const router = express.Router();
 
-// Load your Gemini API key from environment variable
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// --- NEW: Load OpenRouter settings from environment variables ---
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const GEMINI_MODEL_ON_ROUTER = process.env.GEMINI_MODEL_ON_ROUTER || 'google/gemini-flash-1.5';
 
 router.post('/ask', async (req, res) => {
-  
   const { blogContent, question } = req.body;
+
   if (!blogContent || !question) {
     return res.status(400).json({ error: 'Missing blog content or question.' });
   }
-  if (!GEMINI_API_KEY) {
-    return res.status(500).json({ error: 'Gemini API key not set.' });
+
+  // --- NEW: Check for the OpenRouter key ---
+  if (!OPENROUTER_API_KEY) {
+    return res.status(500).json({ error: 'OpenRouter API key not set.' });
   }
 
   try {
-    const model = 'models/gemini-1.5-flash';
-    const url = `https://generativelanguage.googleapis.com/v1/${model}:generateContent?key=${GEMINI_API_KEY}`;
+    // --- NEW: OpenRouter API URL and Headers ---
+    const url = 'https://openrouter.ai/api/v1/chat/completions';
+    const headers = {
+      'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+      'Content-Type': 'application/json'
+    };
+    
+    // --- NEW: The prompt structure is different (OpenAI compatible) ---
+    const prompt = `You are a knowledgeable assistant. Answer the user's question naturally and clearly using both the provided blog post and your broader knowledge. If the blog doesn't include the answer, use your own information and expertise.
 
-    const prompt = `You are a knowledgeable assistant. Answer the user's question naturally and clearly using both the provided blog post and your broader knowledge. If the blog doesn't include the answer, use your own information and expertise.\n\nBlog Post:\n${blogContent}\n\nUser Question:\n${question}\n\nAnswer:`;
+Blog Post:
+${blogContent}
 
+User Question:
+${question}
 
+Answer:`;
+
+    // --- NEW: The request body structure is different ---
     const body = {
-      contents: [{ parts: [{ text: prompt }] }]
+      model: GEMINI_MODEL_ON_ROUTER,
+      messages: [
+        { role: 'user', content: prompt }
+      ]
     };
 
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers, // Use the new headers
       body: JSON.stringify(body)
     });
 
     const data = await response.json();
-    console.log('Gemini API response:', data);
-
-    if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-      res.json({ answer: data.candidates[0].content.parts[0].text });
-    } else if (data.error && data.error.status === 'RESOURCE_EXHAUSTED') {
-      res.status(429).json({ error: 'Daily Gemini API quota reached. Please try again tomorrow.' });
+    console.log('OpenRouter API response:', JSON.stringify(data, null, 2));
+    
+    // --- NEW: The response structure is different ---
+    if (data.choices && data.choices[0]?.message?.content) {
+      // The answer is in a different place
+      res.json({ answer: data.choices[0].message.content });
+    } else if (data.error) {
+        console.error('OpenRouter API Error:', data.error);
+        res.status(500).json({ error: 'An error occurred with the OpenRouter API.', details: data.error.message });
     } else {
-      console.error('Unexpected Gemini response:', data);
-      res.status(500).json({ error: 'Unexpected Gemini API response.', details: data });
+      console.error('Unexpected OpenRouter response:', data);
+      res.status(500).json({ error: 'Unexpected OpenRouter API response.', details: data });
     }
   } catch (err) {
-    res.status(500).json({ error: 'Server error contacting Gemini.', errors: err.message });
+    console.error('Error fetching from OpenRouter API:', err);
+    res.status(500).json({ error: 'Server error contacting OpenRouter.', errors: err.message });
   }
-
 });
 
 export default router;
