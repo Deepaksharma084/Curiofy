@@ -31,7 +31,7 @@ router.post('/ask', async (req, res) => {
     };
     
     // --- NEW: The prompt structure is different (OpenAI compatible) ---
-    const prompt = `You are a knowledgeable assistant. Answer the user's question naturally and clearly using both the provided blog post and your broader knowledge. If the blog doesn't include the answer, use your own information and expertise.
+    const prompt = `You are a knowledgeable assistant. Use the provided blog post and your broader knowledge to answer the user’s question. If the blog does not contain the answer, rely on your own expertise. Always respond briefly and clearly in pointwise format.
 
 Blog Post:
 ${blogContent}
