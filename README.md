@@ -16,6 +16,15 @@ assistant** to help readers dive deeper into topics.
 
 ### 🔍 Overview
 
+-   **Ask Ai**
+![Ask Ai Screenshot](https://github.com/user-attachments/assets/ddf8be85-b128-4cfe-82cf-7ee063ab067d)
+
+-   **Read Blogs**
+![Read Blogs Screenshot](https://github.com/user-attachments/assets/1d2499ea-8d3d-4e46-b591-02a2898382fd)
+
+-   **Search Blogs**
+![Search Blogs Screenshot](https://github.com/user-attachments/assets/9d4ac80f-f614-4d92-ad23-b6a901593008)
+
 -   **Owner Login/Logout**
 ![Owner Login Screenshot](https://github.com/user-attachments/assets/15ecbb7a-8191-4d51-9da4-92d7bc75fa69)
 
