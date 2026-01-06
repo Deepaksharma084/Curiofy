@@ -29,7 +29,7 @@ router.post('/ask', async (req, res) => {
       'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
       'Content-Type': 'application/json'
     };
-    
+
     const prompt = `You are a knowledgeable assistant. Use the provided blog post and your broader knowledge to answer the user’s question. If the blog does not contain the answer, rely on your own expertise. Always respond briefly and clearly in pointwise format.
 
 Blog Post:
@@ -55,12 +55,12 @@ Answer:`;
 
     const data = await response.json();
     console.log('OpenRouter API response:', JSON.stringify(data, null, 2));
-    
+
     if (data.choices && data.choices[0]?.message?.content) {
       res.json({ answer: data.choices[0].message.content });
     } else if (data.error) {
-        console.error('OpenRouter API Error:', data.error);
-        res.status(500).json({ error: 'An error occurred with the OpenRouter API.', details: data.error.message });
+      console.error('OpenRouter API Error:', data.error);
+      res.status(500).json({ error: 'An error occurred with the OpenRouter API.', details: data.error.message });
     } else {
       console.error('Unexpected OpenRouter response:', data);
       res.status(500).json({ error: 'Unexpected OpenRouter API response.', details: data });

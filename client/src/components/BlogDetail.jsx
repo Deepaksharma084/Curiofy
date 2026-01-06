@@ -15,6 +15,7 @@ import DOMPurify from 'dompurify';
 import './BlogContent.css';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import DemoVideoOFCuriofyAi from '/CuriofyAiDemoVideo.mp4';
 
 const BlogDetail = () => {
     const [blog, setBlog] = useState(null);
@@ -174,6 +175,27 @@ const BlogDetail = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Conditionally render the entire styled container when an error occurs */}
+                        {aiError && (
+                            <div className={`${auroraEffect.auroraBg} backdrop-blur-2xl md:p-8 px-3 py-4 rounded-2xl mt-8`}>
+                                <div className="flex flex-col items-center justify-center gap-4">
+                                    <h3 className="text-center text-lg md:text-2xl font-semibold text-[#ffd75e]">
+                                        AI is busy. Showing demo preview.
+                                    </h3>
+
+                                    <video
+                                        key={aiError}
+                                        src={DemoVideoOFCuriofyAi}
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        className="w-full h-auto rounded-xl shadow-lg"
+                                    />
+                                </div>
+                            </div>
+                        )}
 
                         <div className="flex gap-4 mt-8">
                             <div className='flex sm:flex-row gap-2 items-center justify-center w-full'>
