@@ -30,20 +30,30 @@ router.post('/ask', async (req, res) => {
       'Content-Type': 'application/json'
     };
 
-    const prompt = `You are a knowledgeable assistant. Use the provided blog post and your broader knowledge to answer the user’s question. If the blog does not contain the answer, rely on your own expertise. Always respond briefly and clearly in pointwise format.
+    const prompt = `Answer using the blog and your knowledge.
+      Response Rules:
+      Start with one short paragraph.
+      Then give numbered points like 1. 2. 3.
+      No tables.
+      No markdown.
+      No symbols like | * -.
+      Plain text only.
 
-Blog Post:
-${blogContent}
-
-User Question:
-${question}
-
-Answer:`;
+      BLOG:
+      ${blogContent}
+      QUESTION:
+      ${question}
+      `;
 
     const body = {
       model: GPT_MODEL_ON_ROUTER,
+      temperature: 0.2,
       messages: [
-        { role: 'user', content: prompt }
+        {
+          role: "system",
+          content: "Use only paragraphs and numbered points. Never create tables, bullets, markdown, or fancy formatting."
+        },
+        { role: "user", content: prompt }
       ]
     };
 

@@ -176,7 +176,6 @@ const BlogDetail = () => {
                             </div>
                         </div>
 
-                        {/* Conditionally render the entire styled container when an error occurs */}
                         {aiError && (
                             <div className={`${auroraEffect.auroraBg} backdrop-blur-2xl md:p-8 px-3 py-4 rounded-2xl mt-8`}>
                                 <div className="flex flex-col items-center justify-center gap-4">
@@ -184,15 +183,17 @@ const BlogDetail = () => {
                                         AI is busy. Showing demo preview.
                                     </h3>
 
-                                    <video
-                                        key={aiError}
-                                        src={DemoVideoOFCuriofyAi}
-                                        autoPlay
-                                        muted
-                                        loop
-                                        playsInline
-                                        className="w-full h-auto rounded-xl shadow-lg"
-                                    />
+                                    <div className='bg-red-700 rounded-xl'>
+                                        <video
+                                            key={aiError}
+                                            src={DemoVideoOFCuriofyAi}
+                                            autoPlay
+                                            muted
+                                            loop
+                                            playsInline
+                                            className="w-full h-auto rounded-xl shadow-lg"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         )}

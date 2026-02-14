@@ -51,7 +51,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.status(200).send('Server is alive and running!');
+  res.status(200).send('Server is alive and running!');
 }); // Health check endpoint for server in uptimeRobot
 
 app.use("/blogs", blogRoute);
