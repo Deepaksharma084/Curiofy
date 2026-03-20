@@ -120,7 +120,7 @@ const BlogDetail = () => {
             <div className={styles.overlay}>
                 <div className="px-[0.01rem] py-5">
                     <div
-                        className="mx-auto sm:w-screen bg-black/20 rounded-3xl md:p-16 p-3 py-8 shadow-2xl "
+                        className="mx-auto sm:w-full bg-black/20 rounded-3xl md:p-16 p-3 py-8 shadow-2xl "
                     >
                         <div className="flex justify-center items-center w-full">
                             <LazyLoadImage
