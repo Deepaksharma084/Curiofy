@@ -7,7 +7,7 @@ import styles from './Footer.module.css';
 export default function Footer() {
     return (
         <footer id="contact" className={`${styles.footerContainer}`}>
-            <div className={`${styles.footerOverlay} w-screen flex flex-col justify-center items-center`}>
+            <div className={`${styles.footerOverlay} w-full flex flex-col justify-center items-center`}>
                 <div className="parent1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full">
                     <div className="child1 flex flex-col p-8 items-center h-56 ">
                         <div className="text-zinc-300 text-2xl font-bold">
@@ -32,12 +32,12 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="parent2 relative w-screen flex justify-center px-8 items-center">
-                    <div className="child1 bg-zinc-600 h-1 w-screen"></div>
+                <div className="parent2 relative w-full flex justify-center px-8 items-center">
+                    <div className="child1 bg-zinc-600 h-1 w-full"></div>
                 </div>
 
-                <div className="parent3 relative w-screen flex justify-center ">
-                    <div className="child1 flex items-center h-16 w-screen">
+                <div className="parent3 relative w-full flex justify-center ">
+                    <div className="child1 flex items-center h-16 w-full">
                         <p className='text-zinc-400 text-sm absolute right-8'>© 2025 Curiofy. All rights reserved.</p>
                     </div>
                 </div>
