@@ -115,8 +115,3 @@ npm run dev
 App runs at: <http://localhost:5173>
 
 ------------------------------------------------------------------------
-
-### 👤 About the Project
-
-Originally built solo over 2--3 months as a personal learning and
-showcase project. Later adapted for college group submission.
