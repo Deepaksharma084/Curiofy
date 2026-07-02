@@ -50,7 +50,7 @@ assistant** to help readers dive deeper into topics.
 -   **Secure Admin Panel** -- JWT-based login for content management
 -   **Rich Text Editor** -- Modern blog writing with React Quill
 -   **Dynamic Categories** -- Blogs organized for easy discovery
--   **AI-Powered Q&A** -- Google Gemini answers user queries about
+-   **AI-Powered Q&A** -- Ai answers user queries about
     posts
 -   **SEO Optimized** -- Dynamic titles and meta tags using Helmet
 -   **Smooth Animations** -- GSAP-enhanced UI transitions
@@ -74,7 +74,7 @@ assistant** to help readers dive deeper into topics.
 - JWT + Bcrypt for Auth
 
 **APIs & Services:** 
-- Google Gemini API 
+- OpenRouter API
 - UptimeRobot (Keep-alive) 
 - Google Search Console
 
