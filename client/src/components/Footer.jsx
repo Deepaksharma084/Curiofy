@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import LinkedinIcon from '/linkedin.png';
-import GithubIcon from '/github.png';
-import TwitterIcon from '/twitter.png';
+import { FaGithub, FaLinkedin, FaXTwitter, FaInstagram } from "react-icons/fa6";
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -17,17 +15,40 @@ export default function Footer() {
                         </p>
                     </div>
                     <div className="child2 flex flex-col p-8 items-center h-56 ">
-                        <h1 className="text-2xl font-bold text-zinc-300">Contact Us</h1>
+                        <h1 className="text-2xl font-bold text-zinc-300">Contacts</h1>
                         <p className="text-zinc-400 mt-2">deepaksharma07.dev@gmail.com</p>
-                        <p className="text-zinc-400 mt-4">Ram Reddy Nagar ,JDM, HYD 500055</p>
-                        <p className="text-zinc-400 mt-1">+91 1234567890</p>
+                        <p className="text-zinc-400 mt-4">Jeedimetla, HYD 500055</p>
+                        <p className="text-zinc-400 mt-1">+91 11-12-13-isse-agey-nahi-dera</p>
                     </div>
                     <div className="child3 flex flex-col p-8 items-center h-56 ">
-                        <h1 className="text-2xl font-bold text-zinc-300">Follow Us</h1>
+                        <h1 className="text-2xl font-bold text-zinc-300">Connect</h1>
                         <div className='flex gap-4 mt-4'>
-                            <Link to='https://www.linkedin.com/in/deepak-sharma-d440/' target="_blank"><img className='h-10 filter invert' src={LinkedinIcon} alt="" /></Link>
-                            <Link to='https://github.com/Deepaksharma084' target="_blank"><img className='h-10 filter invert' src={GithubIcon} alt="" /></Link>
-                            <Link to='https://x.com/Deepak_shar_ma' target="_blank"><img className='h-10 filter invert' src={TwitterIcon} alt="" /></Link>
+                            <Link
+                                to="https://www.linkedin.com/in/deepak-sharma-d440/"
+                                target="_blank"
+                            >
+                                <FaLinkedin className="h-10 w-10 text-white" />
+                            </Link>
+
+                            <Link
+                                to="https://github.com/Deepaksharma084"
+                                target="_blank"
+                            >
+                                <FaGithub className="h-10 w-10 text-white" />
+                            </Link>
+
+                            <Link
+                                to="https://x.com/Deepak_shar_ma"
+                                target="_blank"
+                            >
+                                <FaXTwitter className="h-10 w-10 text-white" />
+                            </Link>
+                            <Link
+                                to="https://www.instagram.com/deepak_sharma.dev/"
+                                target="_blank"
+                            >
+                                <FaInstagram className="h-10 w-10 text-white" />
+                            </Link>
                         </div>
                     </div>
                 </div>

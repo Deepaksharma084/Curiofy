@@ -20,14 +20,14 @@ export function AuthProvider({ children }) {
         return stored ? JSON.parse(stored) : null;
     });
 
-    // Verify token on mount and when owner changes
+    // Verify token on mount
     useEffect(() => {
         const verifyAuth = async () => {
             try {
                 const response = await fetch(`${API_BASE_URL}/owner/verify`, {
                     credentials: 'include'
                 });
-                
+
                 if (!response.ok) {
                     setOwner(null);
                     localStorage.removeItem('owner');
