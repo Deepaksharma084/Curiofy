@@ -18,7 +18,6 @@ export default function Footer() {
                         <h1 className="text-2xl font-bold text-zinc-300">Contacts</h1>
                         <p className="text-zinc-400 mt-2">deepaksharma07.dev@gmail.com</p>
                         <p className="text-zinc-400 mt-4">Jeedimetla, HYD 500055</p>
-                        <p className="text-zinc-400 mt-1">+91 11-12-13-isse-agey-nahi-dera</p>
                     </div>
                     <div className="child3 flex flex-col p-8 items-center h-56 ">
                         <h1 className="text-2xl font-bold text-zinc-300">Connect</h1>
